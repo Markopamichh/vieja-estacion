@@ -13,10 +13,11 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.7;
     color: var(--text-color);
     background-color: var(--background-color);
+    font-size: 1.1rem;
 }
 
 /* Navigation */
@@ -48,6 +49,7 @@ nav {
 }
 
 .nav-links a {
+    font-size: 1.2rem;
     color: white;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -81,11 +83,16 @@ nav {
     font-size: 3rem;
     margin-bottom: 1rem;
 }
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
 
 /* Menu Section */
 .menu-section {
     padding: 4rem 2rem;
 }
+
 
 .menu-grid {
     display: grid;
@@ -93,6 +100,7 @@ nav {
     gap: 2rem;
     margin-top: 2rem;
 }
+
 
 /* Music Section */
 .music-section {
