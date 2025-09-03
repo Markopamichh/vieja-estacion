@@ -80,44 +80,44 @@ const events = [
     {
         day: 'Miércoles',
         band: 'Jazz Quartet Local',
-        description: 'Noche de Jazz & Blues',
+        description: 'Noche de rock & Blues',
         time: '21:00',
-        image: 'assets/rolling2.jpeg'
+        image: 'assets/musicaenvivo.jpeg'
     },
     {
         day: 'Miércoles',
         band: 'Jazz Quartet Local',
         description: 'Noche de Jazz & Blues',
         time: '21:00',
-        image: 'assets/quuen.jpeg'
+        image: 'assets/musicaenvivo2.jpeg'
     },
     {
         day: 'Jueves',
         band: 'Acoustic Sessions',
         description: 'Música acústica en vivo',
         time: '21:30',
-        image: 'assets/img3.jpeg'
+        image: 'assets/musicaenvivo3.jpeg'
     },
     {
         day: 'Viernes',
         band: 'Rock Revival',
         description: 'Clásicos del rock nacional e internacional',
         time: '22:00',
-        image: 'assets/img1.jpeg'
+        image: 'assets/musicaenvivo4.jpeg'
     },
     {
         day: 'Sábado',
         band: 'Banda invitada',
         description: 'Shows especiales cada semana',
         time: '22:30',
-        image: 'assets/images.jpeg'
+        image: 'assets/musicaenvivo5.jpeg'
     },
     {
         day: 'Domingo',
         band: 'Sunset Sessions',
         description: 'Música en vivo al atardecer',
         time: '20:00',
-        image: 'assets/descarga.jpeg'
+        image: 'assets/musicaenvivo6.jpeg'
     }
 ];
 
