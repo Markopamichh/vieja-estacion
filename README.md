@@ -198,3 +198,4 @@ Para Decap CMS: [decapcms.org](https://decapcms.org/)
 - [ ] Actualizar dirección física en schemas.ts
 - [ ] Configurar dominio personalizado
 - [ ] Enviar sitemap a Google Search Console
+# viejaestacion
