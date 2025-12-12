@@ -1,0 +1,9 @@
+@"
+node_modules/
+.DS_Store
+dist/
+.env
+.env.local
+.vscode/
+.claude/
+"@ | Out-File -FilePath .gitignore -Encoding utf8

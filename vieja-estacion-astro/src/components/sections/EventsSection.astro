@@ -1,0 +1,24 @@
+---
+// Events section component
+import { getCollection } from 'astro:content';
+import EventCard from '../ui/EventCard.astro';
+
+// Get all events from Content Collections
+const allEvents = await getCollection('events');
+
+// Filter active events and sort by event date
+const activeEvents = allEvents
+  .filter(event => event.data.active)
+  .sort((a, b) => a.data.eventDate.getTime() - b.data.eventDate.getTime());
+---
+
+<section id="musica" class="music-section">
+  <div class="section-header">
+    <h2>Música en Vivo</h2>
+  </div>
+  <div class="events-grid">
+    {activeEvents.map(event => (
+      <EventCard {...event.data} />
+    ))}
+  </div>
+</section>

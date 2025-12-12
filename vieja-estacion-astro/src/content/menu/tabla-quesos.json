@@ -1,0 +1,8 @@
+{
+  "category": "Entradas",
+  "name": "Tabla de Quesos Artesanales",
+  "description": "Selección de quesos locales, miel de la región y frutos secos",
+  "price": "$2800",
+  "image": "/assets/images/menu/picada",
+  "active": true
+}

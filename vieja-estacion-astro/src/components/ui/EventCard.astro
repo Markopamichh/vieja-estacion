@@ -1,0 +1,20 @@
+---
+// EventCard component
+interface Props {
+  day: string;
+  band: string;
+  description: string;
+  time: string;
+  image: string;
+}
+
+const { day, band, description, time, image } = Astro.props;
+---
+
+<div class="event-card">
+  <img src={image} alt={band} class="event-image" loading="lazy">
+  <h3>{day}</h3>
+  <h4>{band}</h4>
+  <p>{description}</p>
+  <span class="event-time"><i class="far fa-clock"></i> {time}</span>
+</div>

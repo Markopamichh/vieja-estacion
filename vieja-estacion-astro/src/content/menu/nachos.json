@@ -1,0 +1,8 @@
+{
+  "category": "Para Compartir",
+  "name": "Nachos Cargados",
+  "description": "Nachos con chili de carne, guacamole, pico de gallo y crema agria",
+  "price": "$2600",
+  "image": "/assets/images/menu/nachos.jpeg",
+  "active": true
+}

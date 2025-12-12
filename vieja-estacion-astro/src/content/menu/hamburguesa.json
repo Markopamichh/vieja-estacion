@@ -1,0 +1,8 @@
+{
+  "category": "Principales",
+  "name": "Hamburguesa Vieja Estación",
+  "description": "Blend de carne premium, queso ahumado, panceta crocante, cebolla caramelizada en pan de papa",
+  "price": "$3200",
+  "image": "/assets/images/menu/burga.jpeg",
+  "active": true
+}

@@ -1,0 +1,22 @@
+{
+  "name": "vieja-estacion-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "cms": "npx decap-server",
+    "dev:cms": "concurrently \"npm run dev\" \"npm run cms\"",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.16.4",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "decap-server": "^3.4.0"
+  }
+}

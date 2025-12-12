@@ -1,0 +1,38 @@
+---
+// Footer component
+const whatsappPhone = import.meta.env.PUBLIC_WHATSAPP_PHONE || '2996120756';
+const facebookUrl = import.meta.env.PUBLIC_FACEBOOK_URL || 'https://www.facebook.com/barculturalVIEJAESTACION';
+const instagramUrl = import.meta.env.PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/laviejabarcultural/';
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="/assets/images/logo/imglogo.jpg" alt="Vieja Estación Logo" class="footer-logo-img">
+      </div>
+      <div class="footer-info">
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <p><i class="fas fa-map-marker-alt"></i>Av. Gral. Belgrano 195, Q8309 Centenario, Neuquén, Argentina</p>
+          <p><i class="fas fa-phone"></i> +54 299 612 0756</p>
+          <p><i class="fas fa-clock"></i> Miércoles a Domingo - 18:00 a 02:00</p>
+        </div>
+        <div class="footer-section">
+          <h4>Síguenos</h4>
+          <div class="social-links">
+            <a href={facebookUrl} class="social-link" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href={instagramUrl} class="social-link" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Vieja Estación. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>

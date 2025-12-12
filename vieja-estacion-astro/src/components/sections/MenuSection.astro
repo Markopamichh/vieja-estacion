@@ -1,0 +1,38 @@
+---
+// Menu section component
+import { getCollection } from 'astro:content';
+import MenuItem from '../ui/MenuItem.astro';
+
+// Get all menu items from Content Collections
+const allMenuItems = await getCollection('menu');
+
+// Define categories order
+const categories = ['Entradas', 'Principales', 'Para Compartir'];
+---
+
+<section id="menu" class="menu-section">
+  <div class="section-header">
+    <h2>Nuestro Menú</h2>
+    <p class="subtitle">Sabores que cuentan historias</p>
+  </div>
+  <div class="menu-categories">
+    {categories.map(category => {
+      const items = allMenuItems.filter(item =>
+        item.data.category === category && item.data.active
+      );
+
+      if (items.length === 0) return null;
+
+      return (
+        <div class="menu-category">
+          <h3 class="category-title">{category}</h3>
+          <div class="category-items">
+            {items.map(item => (
+              <MenuItem {...item.data} />
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>

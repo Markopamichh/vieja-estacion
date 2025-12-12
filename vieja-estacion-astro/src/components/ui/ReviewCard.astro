@@ -1,0 +1,25 @@
+---
+// ReviewCard component
+interface Props {
+  stars: number;
+  text: string;
+  name: string;
+  role: string;
+}
+
+const { stars, text, name, role } = Astro.props;
+const starsDisplay = '★'.repeat(stars);
+---
+
+<div class="review-card">
+  <div class="review-content">
+    <div class="stars">{starsDisplay}</div>
+    <p>{text}</p>
+    <div class="reviewer">
+      <div class="reviewer-info">
+        <h4>{name}</h4>
+        <span>{role}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/menu",
+  "definitions": {
+    "menu": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": [
+            "Entradas",
+            "Principales",
+            "Para Compartir"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean",
+          "default": true
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "category",
+        "name",
+        "description",
+        "price",
+        "image"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

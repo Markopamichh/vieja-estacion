@@ -1,0 +1,566 @@
+---
+// Modal para crear nuevos posts del blog con autenticación previa
+---
+
+<dialog id="createPostDialog" class="create-post-modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="this.closest('dialog').close()" type="button">✕</button>
+
+    <!-- Vista de Login -->
+    <div id="loginView">
+      <h2>Iniciar Sesión</h2>
+      <p style="color: #666; margin-bottom: 1.5rem;">Ingresa tus credenciales para crear posts</p>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            placeholder="Ingresa tu usuario"
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Contraseña</label>
+          <input
+            type="password"
+            id="loginPassword"
+            name="password"
+            required
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password"
+          />
+        </div>
+
+        <div id="loginStatus" class="form-status" style="display: none;"></div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" id="loginBtn">
+            Iniciar Sesión
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Vista de Creación de Post (oculta inicialmente) -->
+    <div id="createPostView" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2>Crear Nuevo Post</h2>
+        <button type="button" class="btn-link" id="logoutBtn">Cerrar sesión</button>
+      </div>
+
+      <form id="createPostForm" class="post-form">
+        <!-- Título -->
+        <div class="form-group">
+          <label for="title">Título * (5-100 caracteres)</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            minlength="5"
+            maxlength="100"
+            placeholder="Ej: Rock Nacional este Viernes"
+          />
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group">
+          <label for="description">Descripción * (20-500 caracteres)</label>
+          <textarea
+            id="description"
+            name="description"
+            required
+            minlength="20"
+            maxlength="500"
+            rows="3"
+            placeholder="Breve descripción del post"
+          ></textarea>
+        </div>
+
+        <!-- Contenido -->
+        <div class="form-group">
+          <label for="content">Contenido * (mínimo 50 caracteres, Markdown permitido)</label>
+          <textarea
+            id="content"
+            name="content"
+            required
+            minlength="50"
+            rows="10"
+            placeholder="Escribe el contenido del post aquí. Puedes usar Markdown:&#10;&#10;# Título&#10;## Subtítulo&#10;**Negrita** *cursiva*&#10;&#10;- Item 1&#10;- Item 2"
+          ></textarea>
+        </div>
+
+        <!-- Imagen -->
+        <div class="form-group">
+          <label for="heroImage">Imagen Destacada *</label>
+          <input
+            type="file"
+            id="heroImage"
+            name="heroImage"
+            accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+            required
+          />
+          <small>JPG, PNG, WEBP o GIF - Máximo 5MB</small>
+          <div id="imagePreview" style="display: none; margin-top: 10px;">
+            <img id="imagePreviewImg" src="" alt="Preview" style="max-width: 200px; border-radius: 8px;" />
+          </div>
+        </div>
+
+        <!-- Fecha de publicación -->
+        <div class="form-group">
+          <label for="pubDate">Fecha de Publicación *</label>
+          <input
+            type="datetime-local"
+            id="pubDate"
+            name="pubDate"
+            required
+          />
+        </div>
+
+        <!-- Publicado -->
+        <div class="form-group checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              id="published"
+              name="published"
+            />
+            <span>Publicar inmediatamente</span>
+          </label>
+          <small>Si no lo marcas, el post se guardará como borrador</small>
+        </div>
+
+        <!-- Mensajes de estado -->
+        <div id="formStatus" class="form-status" style="display: none;"></div>
+
+        <!-- Botones -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="this.closest('dialog').close()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            Crear Post
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .create-post-modal {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 700px;
+    width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .create-post-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    padding: 2rem;
+    position: relative;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .close-btn:hover {
+    background-color: #f0f0f0;
+    color: #000;
+  }
+
+  .create-post-modal h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.8rem;
+    color: var(--primary-color, #1a1a1a);
+  }
+
+  .auth-form,
+  .post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color, #1a1a1a);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .form-group small {
+    color: #666;
+    font-size: 0.85rem;
+  }
+
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: normal;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+  }
+
+  .form-status {
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+
+  .form-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .form-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  .form-status.loading {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color, #1a1a1a);
+    color: white;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: #000;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .btn-link {
+    background: none;
+    border: none;
+    color: var(--primary-color, #1a1a1a);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+
+  .btn-link:hover {
+    color: #000;
+  }
+</style>
+
+<script>
+  // Variables globales
+  let authToken: string | null = null;
+
+  // Elementos del DOM
+  const loginView = document.getElementById('loginView') as HTMLDivElement;
+  const createPostView = document.getElementById('createPostView') as HTMLDivElement;
+  const loginForm = document.getElementById('loginForm') as HTMLFormElement;
+  const createPostForm = document.getElementById('createPostForm') as HTMLFormElement;
+  const loginBtn = document.getElementById('loginBtn') as HTMLButtonElement;
+  const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+  const logoutBtn = document.getElementById('logoutBtn') as HTMLButtonElement;
+  const loginStatus = document.getElementById('loginStatus') as HTMLDivElement;
+  const formStatus = document.getElementById('formStatus') as HTMLDivElement;
+  const imageInput = document.getElementById('heroImage') as HTMLInputElement;
+  const imagePreview = document.getElementById('imagePreview') as HTMLDivElement;
+  const imagePreviewImg = document.getElementById('imagePreviewImg') as HTMLImageElement;
+  const pubDateInput = document.getElementById('pubDate') as HTMLInputElement;
+
+  // Funciones de utilidad
+  function showStatus(element: HTMLDivElement, message: string, type: 'success' | 'error' | 'loading') {
+    element.textContent = message;
+    element.className = `form-status ${type}`;
+    element.style.display = 'block';
+  }
+
+  function hideStatus(element: HTMLDivElement) {
+    element.style.display = 'none';
+  }
+
+  function switchToCreateView() {
+    loginView.style.display = 'none';
+    createPostView.style.display = 'block';
+  }
+
+  function switchToLoginView() {
+    createPostView.style.display = 'none';
+    loginView.style.display = 'block';
+    authToken = null;
+    loginForm.reset();
+  }
+
+  // Preview de imagen
+  imageInput?.addEventListener('change', (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imagePreviewImg.src = e.target?.result as string;
+        imagePreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Establecer fecha actual por defecto
+  if (pubDateInput) {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    pubDateInput.value = now.toISOString().slice(0, 16);
+  }
+
+  // Manejo del login
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideStatus(loginStatus);
+
+    const formData = new FormData(loginForm);
+    const username = formData.get('username') as string;
+    const password = formData.get('password') as string;
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Validando...';
+
+    try {
+      showStatus(loginStatus, 'Validando credenciales...', 'loading');
+
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        showStatus(loginStatus, data.error || 'Error de autenticación', 'error');
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Iniciar Sesión';
+        return;
+      }
+
+      // Autenticación exitosa
+      authToken = data.token;
+      hideStatus(loginStatus);
+      switchToCreateView();
+
+    } catch (error) {
+      console.error('Error:', error);
+      showStatus(loginStatus, 'Error inesperado. Verifica la consola.', 'error');
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Iniciar Sesión';
+    }
+  });
+
+  // Manejo del logout
+  logoutBtn?.addEventListener('click', () => {
+    switchToLoginView();
+  });
+
+  // Manejo del formulario de creación de post
+  createPostForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideStatus(formStatus);
+
+    if (!authToken) {
+      showStatus(formStatus, 'Sesión expirada. Por favor inicia sesión nuevamente.', 'error');
+      switchToLoginView();
+      return;
+    }
+
+    const formData = new FormData(createPostForm);
+    const title = formData.get('title') as string;
+    const description = formData.get('description') as string;
+    const content = formData.get('content') as string;
+    const imageFile = formData.get('heroImage') as File;
+    const pubDate = formData.get('pubDate') as string;
+    const published = formData.get('published') === 'on';
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creando...';
+
+    try {
+      // 1. Subir imagen
+      showStatus(formStatus, 'Subiendo imagen...', 'loading');
+      const imageFormData = new FormData();
+      imageFormData.append('token', authToken);
+      imageFormData.append('file', imageFile);
+
+      const imageResponse = await fetch('/api/images/upload', {
+        method: 'POST',
+        body: imageFormData
+      });
+
+      const imageData = await imageResponse.json();
+
+      if (!imageData.success) {
+        showStatus(formStatus, imageData.error || 'Error al subir imagen', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Crear Post';
+        return;
+      }
+
+      const heroImage = imageData.url;
+
+      // 2. Crear post
+      showStatus(formStatus, 'Creando post...', 'loading');
+      const postResponse = await fetch('/api/posts/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: authToken,
+          title,
+          description,
+          content,
+          heroImage,
+          pubDate,
+          published
+        })
+      });
+
+      const postData = await postResponse.json();
+
+      if (!postData.success) {
+        showStatus(formStatus, postData.error || 'Error al crear post', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Crear Post';
+        return;
+      }
+
+      // Éxito
+      showStatus(formStatus, '¡Post creado exitosamente! Recarga la página en unos segundos para verlo.', 'success');
+
+      // Resetear formulario después de 2 segundos
+      setTimeout(() => {
+        createPostForm.reset();
+        imagePreview.style.display = 'none';
+        const dialog = document.getElementById('createPostDialog') as HTMLDialogElement;
+        dialog.close();
+        hideStatus(formStatus);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Crear Post';
+        switchToLoginView();
+
+        // Sugerir recarga
+        if (confirm('¿Quieres recargar la página para ver el nuevo post?')) {
+          window.location.reload();
+        }
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error:', error);
+      showStatus(formStatus, 'Error inesperado. Verifica la consola.', 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Crear Post';
+    }
+  });
+
+  // Reset al cerrar el modal
+  const dialog = document.getElementById('createPostDialog') as HTMLDialogElement;
+  dialog?.addEventListener('close', () => {
+    switchToLoginView();
+    hideStatus(loginStatus);
+    hideStatus(formStatus);
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Iniciar Sesión';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Crear Post';
+  });
+</script>

@@ -1,0 +1,22 @@
+---
+// MenuItem component
+interface Props {
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+}
+
+const { name, description, price, image } = Astro.props;
+---
+
+<div class="menu-item">
+  <div class="menu-item-content">
+    <img src={image} alt={name} class="menu-item-image" loading="lazy">
+    <div class="menu-item-details">
+      <h3>{name}</h3>
+      <p>{description}</p>
+    </div>
+  </div>
+  <span class="menu-item-price">{price}</span>
+</div>

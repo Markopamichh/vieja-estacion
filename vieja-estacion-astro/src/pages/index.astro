@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import MenuSection from '../components/sections/MenuSection.astro';
+import EventsSection from '../components/sections/EventsSection.astro';
+import HistorySection from '../components/sections/HistorySection.astro';
+import ReviewsSection from '../components/sections/ReviewsSection.astro';
+import ReservationSection from '../components/sections/ReservationSection.astro';
+import { restaurantSchema } from '../utils/schemas';
+
+const pageTitle = 'Inicio';
+const pageDescription = 'Bar cultural con música en vivo en el corazón de la ciudad. Disfruta de buena comida, cervezas artesanales y eventos musicales todas las semanas. Miércoles a Domingo, 18:00 a 02:00.';
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schema={restaurantSchema}
+>
+  <Header />
+
+  <main>
+    <Hero />
+    <MenuSection />
+    <EventsSection />
+    <HistorySection />
+    <ReviewsSection />
+    <ReservationSection />
+  </main>
+
+  <Footer />
+
+  <!-- Client-side scripts -->
+  <script src="../scripts/mobile-nav.ts"></script>
+  <script src="../scripts/carousel.ts"></script>
+  <script src="../scripts/reservation.ts"></script>
+</BaseLayout>
