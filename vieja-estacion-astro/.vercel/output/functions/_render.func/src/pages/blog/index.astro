@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import CreatePostModal from '../../components/blog/CreatePostModal.astro';
+import { getCollection } from 'astro:content';
+
+// Get all published blog posts
+const allPosts = await getCollection('blog', ({ data }) => data.published === true);
+
+// Sort by publication date (newest first)
+const sortedPosts = allPosts.sort((a, b) =>
+  b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const pageTitle = 'Blog y Noticias';
+const pageDescription = 'Mantente al día con las últimas noticias, eventos especiales y novedades de Vieja Estación.';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main>
+    <section class="blog-listing" style="padding: 6rem 2rem; min-height: 60vh;">
+      <div class="container">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Blog y Noticias</h1>
+            <p class="subtitle">Mantente al día con nuestras novedades</p>
+          </div>
+          <button
+            id="openModalBtn"
+            style="padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease;"
+            onclick="document.getElementById('createPostDialog').showModal()"
+          >
+            + Nuevo Post
+          </button>
+        </div>
+
+        {sortedPosts.length === 0 ? (
+          <p style="text-align: center; font-size: 1.2rem; color: var(--secondary-color);">
+            Próximamente encontrarás aquí nuestras últimas noticias y eventos especiales.
+          </p>
+        ) : (
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+            {sortedPosts.map(post => (
+              <article style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; transition: transform 0.3s ease;">
+                <a href={`/blog/${post.slug}`} style="text-decoration: none; color: inherit;">
+                  {post.data.heroImage && (
+                    <img
+                      src={post.data.heroImage}
+                      alt={post.data.title}
+                      style="width: 100%; height: 200px; object-fit: cover;"
+                      loading="lazy"
+                    />
+                  )}
+                  <div style="padding: 1.5rem;">
+                    <time style="font-size: 0.9rem; color: var(--secondary-color);">
+                      {post.data.pubDate.toLocaleDateString('es-AR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </time>
+                    <h2 style="margin: 0.5rem 0 1rem; font-size: 1.5rem;">{post.data.title}</h2>
+                    <p style="color: var(--secondary-color); line-height: 1.6;">{post.data.description}</p>
+                    <span style="display: inline-block; margin-top: 1rem; color: var(--primary-color); font-weight: bold;">
+                      Leer más →
+                    </span>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <!-- Modal para crear posts -->
+  <CreatePostModal />
+</BaseLayout>

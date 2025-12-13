@@ -1,0 +1,56 @@
+# Backend local para desarrollo (cambiar a git-gateway para producción)
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/assets/images"
+public_folder: "/assets/images"
+
+locale: "es"
+
+collections:
+  - name: "menu"
+    label: "Menú"
+    folder: "src/content/menu"
+    create: true
+    slug: "{{category}}-{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - {label: "Categoría", name: "category", widget: "select", options: ["Entradas", "Principales", "Para Compartir"]}
+      - {label: "Nombre", name: "name", widget: "string"}
+      - {label: "Descripción", name: "description", widget: "text"}
+      - {label: "Precio", name: "price", widget: "string"}
+      - {label: "Imagen", name: "image", widget: "image"}
+      - {label: "Activo", name: "active", widget: "boolean", default: true}
+
+  - name: "events"
+    label: "Eventos Musicales"
+    folder: "src/content/events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Día", name: "day", widget: "string"}
+      - {label: "Banda", name: "band", widget: "string"}
+      - {label: "Descripción", name: "description", widget: "text"}
+      - {label: "Hora", name: "time", widget: "string"}
+      - {label: "Imagen", name: "image", widget: "image"}
+      - {label: "Fecha del Evento", name: "eventDate", widget: "datetime"}
+      - {label: "Activo", name: "active", widget: "boolean", default: true}
+      - {label: "Contenido", name: "body", widget: "markdown", required: false}
+
+  - name: "blog"
+    label: "Blog/Noticias"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Fecha de Publicación", name: "pubDate", widget: "datetime"}
+      - {label: "Descripción", name: "description", widget: "text"}
+      - {label: "Imagen Destacada", name: "heroImage", widget: "image"}
+      - {label: "Autor", name: "author", widget: "string", default: "Vieja Estación"}
+      - {label: "Publicado", name: "published", widget: "boolean", default: false}
+      - {label: "Contenido", name: "body", widget: "markdown"}
