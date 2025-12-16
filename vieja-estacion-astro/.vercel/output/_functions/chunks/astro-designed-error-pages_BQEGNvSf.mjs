@@ -1,4 +1,4 @@
-import { a9 as NOOP_MIDDLEWARE_HEADER, aa as REDIRECT_STATUS_CODES, A as AstroError, ab as ActionsReturnedInvalidDataError, D as DEFAULT_404_COMPONENT } from './astro/server_BaJHYhA2.mjs';
+import { a9 as NOOP_MIDDLEWARE_HEADER, aa as REDIRECT_STATUS_CODES, A as AstroError, ab as ActionsReturnedInvalidDataError, D as DEFAULT_404_COMPONENT } from './astro/server_BJsilIHS.mjs';
 import { parse, stringify } from 'devalue';
 import { escape } from 'html-escaper';
 
@@ -12,7 +12,7 @@ const ACTION_QUERY_PARAMS$1 = {
   actionName: "_action"};
 const ACTION_RPC_ROUTE_PATTERN = "/_actions/[...path]";
 
-const __vite_import_meta_env__ = {"ASSETS_PREFIX": undefined, "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "PUBLIC_FACEBOOK_URL": "https://www.facebook.com/barculturalVIEJAESTACION", "PUBLIC_INSTAGRAM_URL": "https://www.instagram.com/laviejabarcultural/", "PUBLIC_SITE_URL": "https://viejaestacion.com", "PUBLIC_WHATSAPP_COUNTRY_CODE": "54", "PUBLIC_WHATSAPP_PHONE": "542996120756", "SITE": undefined, "SSR": true};
+const __vite_import_meta_env__ = {"ASSETS_PREFIX": undefined, "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "PUBLIC_FACEBOOK_URL": "https://www.facebook.com/barculturalVIEJAESTACION", "PUBLIC_INSTAGRAM_URL": "https://www.instagram.com/laviejabarcultural/", "PUBLIC_SITE_URL": "https://viejaestacion.com", "PUBLIC_WHATSAPP_COUNTRY_CODE": "54", "PUBLIC_WHATSAPP_PHONE": "542996120756", "SITE": "https://viejaestacion.com", "SSR": true};
 const ACTION_QUERY_PARAMS = ACTION_QUERY_PARAMS$1;
 const codeToStatusMap = {
   // Implemented from IANA HTTP Status Code Registry
