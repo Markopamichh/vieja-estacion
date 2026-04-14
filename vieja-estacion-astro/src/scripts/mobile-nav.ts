@@ -1,24 +1,25 @@
-// Mobile navigation toggle script
-const burger = document.querySelector('.burger');
-const nav = document.querySelector('.nav-links');
-const navLinks = document.querySelectorAll('.nav-links li');
+// Mobile navigation — burger toggles full-screen overlay
+const burger = document.getElementById('burger');
+const overlay = document.getElementById('mobile-overlay');
+const overlayClose = document.getElementById('overlay-close');
+const overlayLinks = document.querySelectorAll('.mobile-overlay__links a');
 
-if (burger && nav) {
-  burger.addEventListener('click', () => {
-    // Toggle Nav
-    nav.classList.toggle('nav-active');
-
-    // Animate Links
-    navLinks.forEach((link, index) => {
-      const linkElement = link as HTMLElement;
-      if (linkElement.style.animation) {
-        linkElement.style.animation = '';
-      } else {
-        linkElement.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-      }
-    });
-
-    // Burger Animation
-    burger.classList.toggle('toggle');
-  });
+function openMenu() {
+  overlay?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  burger?.setAttribute('aria-expanded', 'true');
 }
+
+function closeMenu() {
+  overlay?.classList.remove('open');
+  document.body.style.overflow = '';
+  burger?.setAttribute('aria-expanded', 'false');
+}
+
+burger?.addEventListener('click', openMenu);
+overlayClose?.addEventListener('click', closeMenu);
+
+// Close on link click
+overlayLinks.forEach(link => {
+  link.addEventListener('click', closeMenu);
+});

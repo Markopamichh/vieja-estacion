@@ -1,5 +1,5 @@
 ---
-// MenuItem component
+// MenuItem — minimal card, no heavy borders, serif name, soft gray price
 interface Props {
   name: string;
   description: string;
@@ -10,13 +10,73 @@ interface Props {
 const { name, description, price, image } = Astro.props;
 ---
 
-<div class="menu-item">
-  <div class="menu-item-content">
-    <img src={image} alt={name} class="menu-item-image" loading="lazy">
-    <div class="menu-item-details">
-      <h3>{name}</h3>
-      <p>{description}</p>
-    </div>
+<article class="menu-card reveal">
+  <div class="menu-card__img-wrap">
+    <img src={image} alt={name} loading="lazy">
   </div>
-  <span class="menu-item-price">{price}</span>
-</div>
+  <div class="menu-card__body">
+    <h3 class="menu-card__name">{name}</h3>
+    <p class="menu-card__desc">{description}</p>
+    <span class="menu-card__price">{price}</span>
+  </div>
+</article>
+
+<style>
+  .menu-card {
+    background-color: var(--color-cream);
+    overflow: hidden;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(26, 20, 16, 0.12);
+  }
+
+  /* Image */
+  .menu-card__img-wrap {
+    overflow: hidden;
+    aspect-ratio: 4/3;
+  }
+
+  .menu-card__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .menu-card:hover .menu-card__img-wrap img {
+    transform: scale(1.06);
+  }
+
+  /* Body */
+  .menu-card__body {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .menu-card__name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .menu-card__desc {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #6b5a4e;
+    margin-bottom: 1rem;
+  }
+
+  .menu-card__price {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+</style>

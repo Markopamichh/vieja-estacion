@@ -1,38 +1,115 @@
 ---
-// Footer component
-const whatsappPhone = import.meta.env.PUBLIC_WHATSAPP_PHONE || '2996120756';
+// Footer — compact two-column, inline SVG icons, no extras
 const facebookUrl = import.meta.env.PUBLIC_FACEBOOK_URL || 'https://www.facebook.com/barculturalVIEJAESTACION';
 const instagramUrl = import.meta.env.PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/laviejabarcultural/';
 ---
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="/assets/images/logo/imglogo.jpg" alt="Vieja Estación Logo" class="footer-logo-img">
-      </div>
-      <div class="footer-info">
-        <div class="footer-section">
-          <h4>Contacto</h4>
-          <p><i class="fas fa-map-marker-alt"></i>Av. Gral. Belgrano 195, Q8309 Centenario, Neuquén, Argentina</p>
-          <p><i class="fas fa-phone"></i> +54 299 612 0756</p>
-          <p><i class="fas fa-clock"></i> Miércoles a Domingo - 18:00 a 02:00</p>
-        </div>
-        <div class="footer-section">
-          <h4>Síguenos</h4>
-          <div class="social-links">
-            <a href={facebookUrl} class="social-link" target="_blank" rel="noopener noreferrer">
-              <i class="fab fa-facebook"></i>
-            </a>
-            <a href={instagramUrl} class="social-link" target="_blank" rel="noopener noreferrer">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+<footer class="site-footer">
+  <div class="site-footer__inner container">
+    <div class="site-footer__col">
+      <p class="site-footer__name">La Vieja Estación</p>
+      <p class="site-footer__detail">Av. Gral. Belgrano 195, Centenario, Neuquén</p>
+      <p class="site-footer__detail">Mié a Dom &nbsp;·&nbsp; 18:00 – 02:00</p>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2025 Vieja Estación. Todos los derechos reservados.</p>
+    <div class="site-footer__col site-footer__col--right">
+      <div class="site-footer__social">
+        <a href={instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <!-- Instagram icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <a href={facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <!-- Facebook icon -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
+  <div class="site-footer__copy container">
+    <p>&copy; 2025 La Vieja Estación. Todos los derechos reservados.</p>
+  </div>
 </footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-dark);
+    border-top: 1px solid var(--color-brown);
+    padding-top: 3rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .site-footer__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .site-footer__detail {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.9;
+  }
+
+  .site-footer__col--right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .site-footer__social {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .site-footer__social a {
+    color: var(--color-text-muted);
+    transition: color var(--transition-base), transform var(--transition-base);
+    display: flex;
+    align-items: center;
+  }
+
+  .site-footer__social a:hover {
+    color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  .site-footer__copy {
+    border-top: 1px solid var(--color-brown);
+    padding-top: 1.25rem;
+  }
+
+  .site-footer__copy p {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 600px) {
+    .site-footer__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .site-footer__col--right {
+      align-items: flex-start;
+    }
+  }
+</style>
