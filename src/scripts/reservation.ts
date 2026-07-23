@@ -19,7 +19,7 @@ if (form) {
 - Nombre: ${name}`;
 
     // Get WhatsApp phone from environment variable or use default
-    const phone = import.meta.env.PUBLIC_WHATSAPP_PHONE || '542996120756';
+    const phone = import.meta.env.PUBLIC_WHATSAPP_PHONE || '542994051816';
 
     // Create WhatsApp link with the message
     const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;

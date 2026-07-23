@@ -7,10 +7,11 @@ import HistorySection from '../components/sections/HistorySection.astro';
 import MenuSection from '../components/sections/MenuSection.astro';
 import EventsSection from '../components/sections/EventsSection.astro';
 import ReservationSection from '../components/sections/ReservationSection.astro';
+import LocationSection from '../components/sections/LocationSection.astro';
 import { restaurantSchema } from '../utils/schemas';
 
 const pageTitle = 'Inicio';
-const pageDescription = 'Bar cultural con música en vivo en el corazón de Centenario, Neuquén. Buena comida, cervezas artesanales y eventos musicales todas las semanas. Miércoles a Domingo, 18:00 a 02:00.';
+const pageDescription = 'Bar cultural con música en vivo en el corazón de Centenario, Neuquén. Buena comida, cervezas artesanales y eventos musicales todas las semanas. Mié, Jue y Dom de 19:00 a 01:00 · Vie y Sáb de 19:00 a 04:00.';
 ---
 
 <BaseLayout
@@ -22,9 +23,10 @@ const pageDescription = 'Bar cultural con música en vivo en el corazón de Cent
 
   <main>
     <Hero />
-    <HistorySection />
-    <MenuSection />
     <EventsSection />
+    <MenuSection />
+    <HistorySection />
+    <LocationSection />
     <ReservationSection />
   </main>
 

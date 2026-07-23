@@ -1,0 +1,8 @@
+{
+  "category": "Pizzas",
+  "name": "Pizza pollo y panceta",
+  "description": "Pollo, panceta, mozzarella y verdeo",
+  "order": 59,
+  "active": true,
+  "image": "/assets/images/menu/pizza-pollo-y-panceta.jpg"
+}

@@ -7,24 +7,32 @@ export const restaurantSchema = {
   "description": "Bar cultural con música en vivo, comida artesanal y eventos semanales",
   "image": "https://viejaestacion.com/assets/images/hero/heroimg.webp",
   "url": "https://viejaestacion.com",
-  "telephone": "+542996120756",
+  "telephone": "+542994051816",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Dirección del Bar", // TODO: Actualizar con dirección real
-    "addressLocality": "Ciudad", // TODO: Actualizar
-    "addressRegion": "Provincia", // TODO: Actualizar
-    "postalCode": "XXXX", // TODO: Actualizar
+    "streetAddress": "Av. Gral. Belgrano 195",
+    "addressLocality": "Centenario",
+    "addressRegion": "Neuquén",
+    "postalCode": "Q8309",
     "addressCountry": "AR"
   },
-  "openingHoursSpecification": [{
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    "opens": "18:00",
-    "closes": "02:00"
-  }],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Wednesday", "Thursday", "Sunday"],
+      "opens": "19:00",
+      "closes": "01:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Friday", "Saturday"],
+      "opens": "19:00",
+      "closes": "04:00"
+    }
+  ],
   "servesCuisine": "Cocina casera, Picadas, Hamburguesas",
   "priceRange": "$$",
-  "menu": "https://viejaestacion.com/#menu",
+  "menu": "https://menu.fu.do/viejaestacion/qr-menu",
   "sameAs": [
     "https://www.facebook.com/barculturalVIEJAESTACION",
     "https://www.instagram.com/laviejabarcultural/"
@@ -33,7 +41,7 @@ export const restaurantSchema = {
     "@type": "ReserveAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "https://wa.me/542996120756?text={reservation_query}",
+      "urlTemplate": "https://wa.me/542994051816?text={reservation_query}",
       "actionPlatform": [
         "http://schema.org/DesktopWebPlatform",
         "http://schema.org/MobileWebPlatform"

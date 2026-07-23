@@ -25,7 +25,7 @@ Rock Revival es conocida por sus versiones fieles de:
 - **Fecha**: Viernes 13 de diciembre
 - **Hora**: 22:00 hs
 - **Entrada**: Consumición mínima $5000
-- **Reservas**: Por WhatsApp al 299 612 0756
+- **Reservas**: Por WhatsApp al 299 405-1816
 
 ## Promociones especiales
 
@@ -57,6 +57,6 @@ Seguimos cuidándonos entre todos. Recordá:
 
 No te quedes afuera de la mejor noche de rock!
 
-📞 WhatsApp: **299 612 0756**
+📞 WhatsApp: **299 405-1816**
 
 Los esperamos para rockear juntos! 🎸🎵

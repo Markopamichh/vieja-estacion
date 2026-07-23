@@ -1,0 +1,8 @@
+{
+  "category": "Platos Principales",
+  "name": "Milanesa",
+  "description": "Sale con fritas o ensalada. Por $2000 mas, pedila fugazza, napolitana o a caballo.",
+  "order": 45,
+  "active": true,
+  "image": "/assets/images/menu/milanesa.jpg"
+}

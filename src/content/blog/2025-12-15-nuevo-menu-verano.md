@@ -39,12 +39,13 @@ No te pierdas nuestros nuevos tragos de verano:
 ## Horarios especiales de verano
 
 A partir de enero:
-- **Miércoles a Viernes**: 18:00 a 02:00
+- **Miércoles, Jueves y Domingo**: 19:00 a 01:00
+- **Viernes y Sábado**: 19:00 a 04:00
 - **Sábados**: 12:00 a 03:00 (almuerzo + cena + música)
 - **Domingos**: 12:00 a 00:00
 
 ## Reservas
 
-Reservá tu mesa y probá el nuevo menú. Contactanos por WhatsApp al **299 612 0756**.
+Reservá tu mesa y probá el nuevo menú. Contactanos por WhatsApp al **299 405-1816**.
 
 ¡Los esperamos para disfrutar juntos del verano!

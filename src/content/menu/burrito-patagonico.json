@@ -1,0 +1,8 @@
+{
+  "category": "Coctelería de autor",
+  "name": "Burrito patagonico",
+  "description": "cordial de burrito y cedrón. jugo de naranja y limón, vodka, vino malbec y soda.",
+  "order": 8,
+  "active": true,
+  "image": "/assets/images/menu/burrito-patagonico.jpg"
+}

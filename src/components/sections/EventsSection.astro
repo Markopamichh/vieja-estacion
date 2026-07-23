@@ -1,175 +1,244 @@
 ---
-// Música en Vivo — dark section, typographic event cards + Instagram placeholder
-import { getCollection } from 'astro:content';
-import EventCard from '../ui/EventCard.astro';
-
-const allEvents = await getCollection('events');
-const activeEvents = allEvents
-  .filter(event => event.data.active)
-  .sort((a, b) => a.data.eventDate.getTime() - b.data.eventDate.getTime());
+// Eventos — live Instagram feed via Behold JSON, fallback to static images
+const BEHOLD_FEED_URL = import.meta.env.PUBLIC_BEHOLD_FEED_URL || 'https://feeds.behold.so/FEED_ID';
+const INSTAGRAM_URL = 'https://www.instagram.com/laviejabarcultural/';
 ---
 
-<section id="musica" class="music section--dark">
+<section id="eventos" class="events section--dark">
   <div class="container">
-    <div class="music__header reveal">
-      <p class="section-label">Cada semana</p>
-      <h2 class="section-title music__title">Música en Vivo</h2>
+    <div class="events__header reveal">
+      <p class="section-label">Agenda</p>
+      <h2 class="section-title events__title">Eventos</h2>
     </div>
 
-    <div class="events-grid">
-      {activeEvents.map(event => (
-        <EventCard {...event.data} />
-      ))}
+    <div
+      class="events__grid reveal"
+      id="ig-feed-grid"
+      data-feed-url={BEHOLD_FEED_URL}
+      data-instagram-url={INSTAGRAM_URL}
+    >
+      <!-- Fallback: static posts (replaced by JS if the feed loads) -->
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="ig-post">
+        <img src="/assets/images/events/musicaenvivo2.jpeg" alt="Música en vivo en La Vieja Estación" loading="lazy" />
+        <div class="ig-post__overlay">
+          <p class="ig-post__caption">Viernes de rock en vivo — el escenario nos espera</p>
+        </div>
+      </a>
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="ig-post">
+        <img src="/assets/images/events/musicaenvivo4.jpeg" alt="Jazz en vivo en La Vieja Estación" loading="lazy" />
+        <div class="ig-post__overlay">
+          <p class="ig-post__caption">Jazz Quartet — miércoles íntimo con el mejor sonido</p>
+        </div>
+      </a>
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="ig-post">
+        <img src="/assets/images/events/musicaenvivo6.jpeg" alt="Sunset Sessions en La Vieja Estación" loading="lazy" />
+        <div class="ig-post__overlay">
+          <p class="ig-post__caption">Domingo Sunset Sessions — música al caer el sol</p>
+        </div>
+      </a>
     </div>
 
-    <!-- Instagram placeholder -->
-    <div class="ig-section reveal">
-      <div class="ig-section__top">
-        <p class="ig-section__label">Seguinos en Instagram</p>
-        <a
-          href="https://www.instagram.com/laviejabarcultural/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="ig-section__handle"
-        >@laviejabarcultural</a>
-      </div>
-      <div class="ig-grid">
-        <div class="ig-post">
-          <img src="/assets/images/events/musicaenvivo2.jpeg" alt="Post Instagram" loading="lazy">
-          <div class="ig-post__caption">Viernes de rock en vivo — el escenario nos espera</div>
-        </div>
-        <div class="ig-post">
-          <img src="/assets/images/events/musicaenvivo4.jpeg" alt="Post Instagram" loading="lazy">
-          <div class="ig-post__caption">Jazz Quartet — miércoles íntimo con el mejor sonido</div>
-        </div>
-        <div class="ig-post">
-          <img src="/assets/images/events/musicaenvivo6.jpeg" alt="Post Instagram" loading="lazy">
-          <div class="ig-post__caption">Domingo Sunset Sessions — música al caer el sol</div>
-        </div>
-      </div>
+    <div class="events__cta reveal">
+      <a
+        href={INSTAGRAM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="events__cta-link"
+      >Ver toda la agenda en @laviejabarcultural →</a>
     </div>
   </div>
 </section>
 
+<script>
+  type BeholdPost = {
+    id: string;
+    permalink: string;
+    caption?: string;
+    mediaType: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM';
+    mediaUrl: string;
+    thumbnailUrl?: string;
+    timestamp: string;
+  };
+
+  async function loadInstagramFeed() {
+    const grid = document.getElementById('ig-feed-grid');
+    if (!grid) return;
+
+    const feedUrl = grid.dataset.feedUrl;
+    // Feed not configured yet — keep static fallback
+    if (!feedUrl || feedUrl.includes('FEED_ID')) return;
+
+    try {
+      const res = await fetch(feedUrl);
+      if (!res.ok) throw new Error(`Feed HTTP ${res.status}`);
+      const data = await res.json();
+      const posts: BeholdPost[] = (data.posts ?? data).slice(0, 6);
+      if (!posts.length) return;
+
+      const dateFmt = new Intl.DateTimeFormat('es-AR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+
+      grid.innerHTML = '';
+      for (const post of posts) {
+        const imgSrc = post.mediaType === 'VIDEO' ? (post.thumbnailUrl ?? post.mediaUrl) : post.mediaUrl;
+        const firstLine = (post.caption ?? '').split('\n')[0];
+        const caption = firstLine.length > 90 ? firstLine.slice(0, 90).trimEnd() + '…' : firstLine;
+        const date = dateFmt.format(new Date(post.timestamp));
+
+        const link = document.createElement('a');
+        link.href = post.permalink;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'ig-post';
+
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = caption || 'Post de Instagram de La Vieja Estación';
+        img.loading = 'lazy';
+
+        const overlay = document.createElement('div');
+        overlay.className = 'ig-post__overlay';
+
+        const dateEl = document.createElement('p');
+        dateEl.className = 'ig-post__date';
+        dateEl.textContent = date;
+        overlay.appendChild(dateEl);
+
+        if (caption) {
+          const captionEl = document.createElement('p');
+          captionEl.className = 'ig-post__caption';
+          captionEl.textContent = caption;
+          overlay.appendChild(captionEl);
+        }
+
+        link.appendChild(img);
+        link.appendChild(overlay);
+        grid.appendChild(link);
+      }
+    } catch (err) {
+      // Keep static fallback on any failure
+      console.warn('No se pudo cargar el feed de Instagram:', err);
+    }
+  }
+
+  loadInstagramFeed();
+</script>
+
 <style>
-  .music {
+  .events {
     padding-block: var(--section-pad);
   }
 
-  .music__header {
-    margin-bottom: 4rem;
+  .events__header {
+    margin-bottom: 3.5rem;
   }
 
-  .music__title {
+  .events__title {
     color: var(--color-text-primary);
     margin-top: 0.5rem;
   }
 
-  /* Events grid */
-  .events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1px;
-    border: 1px solid var(--color-brown);
-    margin-bottom: 5rem;
-  }
-
-  /* Instagram section */
-  .ig-section__top {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .ig-section__label {
-    font-family: var(--font-body);
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-
-  .ig-section__handle {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--color-gold);
-    transition: color var(--transition-base);
-  }
-
-  .ig-section__handle:hover {
-    color: var(--color-text-primary);
-  }
-
-  /* IG grid */
-  .ig-grid {
+  .events__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 6px;
   }
 
-  .ig-post {
+  .events__grid :global(.ig-post) {
     position: relative;
+    display: block;
     aspect-ratio: 1/1;
     overflow: hidden;
     border: 1px solid var(--color-brown);
   }
 
-  .ig-post img {
+  .events__grid :global(.ig-post img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease, filter 0.4s ease;
   }
 
-  .ig-post__caption {
+  .events__grid :global(.ig-post__overlay) {
     position: absolute;
     inset: 0;
     background-color: rgba(26, 20, 16, 0.88);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     padding: 1.25rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .events__grid :global(.ig-post__date) {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .events__grid :global(.ig-post__caption) {
     font-family: var(--font-display);
     font-size: 0.95rem;
     font-style: italic;
     font-weight: 300;
     color: var(--color-text-primary);
-    text-align: center;
     line-height: 1.5;
-    opacity: 0;
-    transition: opacity 0.35s ease;
   }
 
-  .ig-post:hover img {
+  .events__grid :global(.ig-post:hover img) {
     transform: scale(1.06);
     filter: brightness(0.6);
   }
 
-  .ig-post:hover .ig-post__caption {
+  .events__grid :global(.ig-post:hover .ig-post__overlay) {
     opacity: 1;
   }
 
-  @media (max-width: 768px) {
-    .events-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .ig-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
+  /* Touch devices: overlay always visible as gradient at bottom */
+  @media (hover: none) {
+    .events__grid :global(.ig-post__overlay) {
+      opacity: 1;
+      background: linear-gradient(to top, rgba(26, 20, 16, 0.92) 0%, rgba(26, 20, 16, 0.4) 50%, transparent 100%);
+      justify-content: flex-end;
+      align-items: flex-start;
+      text-align: left;
+      padding: 1rem;
     }
   }
 
-  @media (max-width: 480px) {
-    .ig-grid {
-      grid-template-columns: 1fr;
-    }
+  /* CTA */
+  .events__cta {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
 
-    .ig-post {
-      aspect-ratio: 4/3;
+  .events__cta-link {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--color-gold);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .events__cta-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  @media (max-width: 768px) {
+    .events__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
     }
   }
 </style>

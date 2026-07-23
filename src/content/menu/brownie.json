@@ -1,0 +1,8 @@
+{
+  "category": "Postres",
+  "name": "Brownie",
+  "description": "Sale con helado y frutos rojos",
+  "order": 74,
+  "active": true,
+  "image": "/assets/images/menu/brownie.jpg"
+}

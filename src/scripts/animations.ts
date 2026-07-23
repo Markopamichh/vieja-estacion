@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Generic reveal — elements with .reveal class ────────────────
-  gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+  gsap.utils.toArray('.reveal').forEach((el: HTMLElement) => {
     gsap.to(el, {
       scrollTrigger: {
         trigger: el,
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Historia image clip-path reveals ───────────────────────────
-  gsap.utils.toArray<HTMLElement>('.history-img').forEach((el) => {
+  gsap.utils.toArray('.history-img').forEach((el: HTMLElement) => {
     // Skip on mobile (clip-path disabled via CSS inset 0 0%)
     if (window.innerWidth <= 768) return;
 

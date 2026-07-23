@@ -1,0 +1,8 @@
+{
+  "category": "Hamburguesas",
+  "name": "Hamburguesa Americana",
+  "description": "Doble medallón de carne, doble cheddar, doble panceta, huevo frito. Viene con papas fritas.",
+  "order": 65,
+  "active": true,
+  "image": "/assets/images/menu/hamburguesa-americana.jpg"
+}

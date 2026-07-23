@@ -4,7 +4,42 @@ import { getCollection } from 'astro:content';
 import MenuItem from '../ui/MenuItem.astro';
 
 const allMenuItems = await getCollection('menu');
-const categories = ['Entradas', 'Principales', 'Para Compartir'];
+
+// Category display order, split into two tabs: comida y bebidas
+const foodCategories = [
+  'Entradas',
+  'Ensaladas',
+  'Platos Principales',
+  'Pizzas',
+  'Sandwichs',
+  'Hamburguesas',
+  'Postres',
+];
+const drinkCategories = [
+  'Coctelería de autor',
+  'Tragos',
+  'Birras',
+  'Latas',
+  'Vinos / espumantes',
+  'Vermouth',
+  'Whiskey',
+  'Bebidas sin alcohol',
+];
+
+const itemsBy = (category: string) =>
+  allMenuItems
+    .filter(item => item.data.category === category && item.data.active)
+    .sort((a, b) => a.data.order - b.data.order);
+
+const groups = [
+  { id: 'comida', label: 'Comida', categories: foodCategories },
+  { id: 'bebidas', label: 'Bebidas', categories: drinkCategories },
+].map(g => ({
+  ...g,
+  blocks: g.categories
+    .map(c => ({ category: c, items: itemsBy(c) }))
+    .filter(b => b.items.length > 0),
+}));
 ---
 
 <section id="menu" class="menu-section section--light">
@@ -12,29 +47,78 @@ const categories = ['Entradas', 'Principales', 'Para Compartir'];
     <div class="menu-section__header reveal">
       <p class="section-label">Lo que servimos</p>
       <h2 class="section-title">Nuestro Menú</h2>
+      <p class="menu-section__sub">Nuestra carta completa. Para precios actualizados y pedidos, entrá al menú online.</p>
     </div>
 
-    {categories.map(category => {
-      const items = allMenuItems.filter(item =>
-        item.data.category === category && item.data.active
-      );
-      if (items.length === 0) return null;
+    <div class="menu-tabs reveal" role="tablist">
+      {groups.map((g, i) => (
+        <button
+          type="button"
+          role="tab"
+          class:list={['menu-tabs__btn', i === 0 && 'is-active']}
+          data-tab={g.id}
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >{g.label}</button>
+      ))}
+    </div>
 
-      return (
-        <div class="menu-category">
-          <div class="menu-category__sep reveal">
-            <span>{category.toUpperCase()}</span>
-          </div>
-          <div class="menu-category__grid">
-            {items.map(item => (
-              <MenuItem {...item.data} />
-            ))}
-          </div>
+    {groups.map((g, i) => (
+      <div class:list={['menu-panel', i === 0 && 'is-active']} data-panel={g.id}>
+        <div class="menu-panel__cols">
+          {g.blocks.map(block => (
+            <div class="menu-category">
+              <div class="menu-category__sep">
+                <span>{block.category.toUpperCase()}</span>
+              </div>
+              <div class="menu-category__list">
+                {block.items.map(item => (
+                  <MenuItem {...item.data} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-      );
-    })}
+      </div>
+    ))}
+
+    <div class="menu-section__cta reveal">
+      <a
+        href="https://menu.fu.do/viejaestacion/qr-menu"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="menu-section__cta-btn"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        Ver menú completo
+      </a>
+      <p class="menu-section__cta-note">Carta completa con precios actualizados</p>
+    </div>
   </div>
 </section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.menu-tabs__btn');
+  const panels = document.querySelectorAll<HTMLElement>('.menu-panel');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+
+      tabs.forEach((t) => {
+        const active = t === tab;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-selected', String(active));
+      });
+
+      panels.forEach((p) => {
+        p.classList.toggle('is-active', p.dataset.panel === target);
+      });
+    });
+  });
+</script>
 
 <style>
   .menu-section {
@@ -54,21 +138,116 @@ const categories = ['Entradas', 'Principales', 'Para Compartir'];
     margin-top: 0.5rem;
   }
 
-  /* Category separator */
+  .menu-section__sub {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-gold-muted);
+    margin-top: 1rem;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  /* CTA to full menu */
+  .menu-section__cta {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .menu-section__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 2.25rem;
+    background: var(--color-text-dark);
+    color: var(--color-cream);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background var(--transition-base), transform var(--transition-base);
+  }
+
+  .menu-section__cta-btn:hover {
+    background: var(--color-gold-muted);
+    transform: translateY(-2px);
+  }
+
+  .menu-section__cta-note {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--color-gold-muted);
+    margin-top: 0.85rem;
+  }
+
+  /* Tabs */
+  .menu-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #c8b89a;
+  }
+
+  .menu-tabs__btn {
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.8rem 1.75rem;
+    margin-bottom: -1px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold-muted);
+    cursor: pointer;
+    transition: color var(--transition-base), border-color var(--transition-base);
+  }
+
+  .menu-tabs__btn:hover {
+    color: var(--color-text-dark);
+  }
+
+  .menu-tabs__btn.is-active {
+    color: var(--color-text-dark);
+    border-bottom-color: var(--color-text-dark);
+  }
+
+  /* Panels */
+  .menu-panel {
+    display: none;
+  }
+
+  .menu-panel.is-active {
+    display: block;
+  }
+
+  /* Masonry-style columns so all categories fit compactly */
+  .menu-panel__cols {
+    column-count: 2;
+    column-gap: 5rem;
+  }
+
+  /* Category block — kept whole inside a column */
   .menu-category {
-    margin-bottom: 3.5rem;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 3.25rem;
   }
 
   .menu-category__sep {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .menu-category__sep span {
     font-family: var(--font-body);
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.25em;
     color: var(--color-text-dark);
@@ -82,16 +261,16 @@ const categories = ['Entradas', 'Principales', 'Para Compartir'];
     background-color: #c8b89a;
   }
 
-  /* Grid */
-  .menu-category__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+  @media (max-width: 900px) {
+    .menu-panel__cols {
+      column-count: 1;
+    }
   }
 
   @media (max-width: 480px) {
-    .menu-category__grid {
-      grid-template-columns: 1fr;
+    .menu-tabs__btn {
+      flex: 1;
+      padding: 0.6rem 0.5rem;
     }
   }
 </style>

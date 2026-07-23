@@ -1,82 +1,97 @@
 ---
-// MenuItem — minimal card, no heavy borders, serif name, soft gray price
+// MenuItem — compact row: optional thumbnail + name + description. No price.
 interface Props {
   name: string;
-  description: string;
-  price: string;
-  image: string;
+  description?: string;
+  image?: string;
 }
 
-const { name, description, price, image } = Astro.props;
+const { name, description, image } = Astro.props;
 ---
 
-<article class="menu-card reveal">
-  <div class="menu-card__img-wrap">
-    <img src={image} alt={name} loading="lazy">
+<article class="menu-item">
+  <div class="menu-item__body">
+    <h3 class="menu-item__name">{name}</h3>
+    {description && <p class="menu-item__desc">{description}</p>}
   </div>
-  <div class="menu-card__body">
-    <h3 class="menu-card__name">{name}</h3>
-    <p class="menu-card__desc">{description}</p>
-    <span class="menu-card__price">{price}</span>
-  </div>
+  {image && (
+    <div class="menu-item__thumb">
+      <img src={image} alt={name} loading="lazy" width="72" height="72" />
+    </div>
+  )}
 </article>
 
 <style>
-  .menu-card {
-    background-color: var(--color-cream);
+  .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid rgba(200, 184, 154, 0.45);
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Thumbnail */
+  .menu-item__thumb {
+    flex-shrink: 0;
+    width: 84px;
+    height: 84px;
     overflow: hidden;
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    border-radius: 3px;
+    background-color: rgba(200, 184, 154, 0.25);
   }
 
-  .menu-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(26, 20, 16, 0.12);
-  }
-
-  /* Image */
-  .menu-card__img-wrap {
-    overflow: hidden;
-    aspect-ratio: 4/3;
-  }
-
-  .menu-card__img-wrap img {
+  .menu-item__thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    display: block;
+    transition: transform var(--transition-base);
   }
 
-  .menu-card:hover .menu-card__img-wrap img {
-    transform: scale(1.06);
+  .menu-item:hover .menu-item__thumb img {
+    transform: scale(1.08);
   }
 
   /* Body */
-  .menu-card__body {
-    padding: 1.25rem 1.25rem 1.5rem;
+  .menu-item__body {
+    min-width: 0;
+    flex: 1;
   }
 
-  .menu-card__name {
+  .menu-item__name {
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
+    line-height: 1.25;
     color: var(--color-text-dark);
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
+    margin: 0;
   }
 
-  .menu-card__desc {
+  .menu-item__desc {
     font-family: var(--font-body);
-    font-size: 0.82rem;
-    line-height: 1.6;
-    color: #6b5a4e;
-    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #6d6153;
+    margin: 0.3rem 0 0;
   }
 
-  .menu-card__price {
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--color-text-muted);
-    letter-spacing: 0.05em;
+  @media (max-width: 480px) {
+    .menu-item__thumb {
+      width: 64px;
+      height: 64px;
+    }
+
+    .menu-item__name {
+      font-size: 1.1rem;
+    }
+
+    .menu-item__desc {
+      font-size: 0.82rem;
+    }
   }
 </style>

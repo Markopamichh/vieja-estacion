@@ -1,0 +1,8 @@
+{
+  "category": "Ensaladas",
+  "name": "Ensalada clasica",
+  "description": "Lechuga, tomate, zanahoria y huevo",
+  "order": 113,
+  "active": true,
+  "image": "/assets/images/menu/ensalada-clasica.jpg"
+}

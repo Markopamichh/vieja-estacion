@@ -1,0 +1,8 @@
+{
+  "category": "Sandwichs",
+  "name": "Sándwich Vieja Estación",
+  "description": "Roast beef desmechado horneado en cerveza, queso, jamón, huevo, lechuga tomate, Lacto de marrones",
+  "order": 63,
+  "active": true,
+  "image": "/assets/images/menu/sandwich-vieja-estacion.jpg"
+}

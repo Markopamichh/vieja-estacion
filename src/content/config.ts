@@ -3,11 +3,11 @@ import { defineCollection, z } from 'astro:content';
 const menuCollection = defineCollection({
   type: 'data',
   schema: z.object({
-    category: z.enum(['Entradas', 'Principales', 'Para Compartir']),
+    category: z.string(),
     name: z.string(),
-    description: z.string(),
-    price: z.string(),
-    image: z.string(),
+    description: z.string().default(''),
+    image: z.string().optional(),
+    order: z.number().default(0),
     active: z.boolean().default(true),
   }),
 });

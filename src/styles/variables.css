@@ -24,7 +24,7 @@
 
   /* Spacing */
   --section-pad: clamp(5rem, 10vw, 9rem);
-  --container:   1200px;
+  --container:   1440px;
 
   /* Transitions */
   --transition-base: 0.3s ease;

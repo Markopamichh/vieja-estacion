@@ -1,0 +1,8 @@
+{
+  "category": "Bebidas sin alcohol",
+  "name": "Pomelote",
+  "description": "Base de jugo de pomelo, se completa con agua tónica y meta fresca. Refrescante",
+  "order": 85,
+  "active": true,
+  "image": "/assets/images/menu/pomelote.jpg"
+}

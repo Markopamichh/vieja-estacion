@@ -1,0 +1,8 @@
+{
+  "category": "Platos Principales",
+  "name": "Poke Bowl Ebi",
+  "description": "Base de arroz, langostinos , palta, queso crema, mango en cubos, salsa de maracuya, frutilla, verdeo, vegetales encurtidos y huevo baja temperatura.",
+  "order": 49,
+  "active": true,
+  "image": "/assets/images/menu/poke-bowl-ebi.jpg"
+}

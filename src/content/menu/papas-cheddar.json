@@ -1,0 +1,8 @@
+{
+  "category": "Entradas",
+  "name": "Papas cheddar",
+  "description": "Papas cheddar con verdeo y panceta.",
+  "order": 40,
+  "active": true,
+  "image": "/assets/images/menu/papas-cheddar.jpg"
+}

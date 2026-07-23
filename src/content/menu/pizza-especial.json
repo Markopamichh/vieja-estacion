@@ -1,0 +1,7 @@
+{
+  "category": "Pizzas",
+  "name": "Pizza especial",
+  "description": "Jamon, mozzarella, morrones asados y huevo duro. 8 porciones",
+  "order": 56,
+  "active": true
+}
