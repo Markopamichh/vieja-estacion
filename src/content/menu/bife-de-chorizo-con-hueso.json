@@ -1,8 +1,8 @@
 {
   "category": "Platos Principales",
   "name": "Bife de chorizo con hueso",
-  "description": "con mil hojas de papas Por $2000 mas, pedilo a caballo.",
-  "order": 44,
+  "description": "guarnición a elección.",
+  "order": 23,
   "active": true,
-  "image": "/assets/images/menu/bife-de-chorizo-con-hueso.jpg"
+  "image": "/assets/images/menu/bife-de-chorizo-con-hueso.webp"
 }

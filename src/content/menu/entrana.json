@@ -2,7 +2,7 @@
   "category": "Platos Principales",
   "name": "Entraña",
   "description": "con guarnición a elección",
-  "order": 51,
+  "order": 105,
   "active": true,
-  "image": "/assets/images/menu/entrana.jpg"
+  "image": "/assets/images/menu/entrana.webp"
 }

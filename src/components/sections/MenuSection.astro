@@ -18,6 +18,7 @@ const foodCategories = [
 const drinkCategories = [
   'Coctelería de autor',
   'Tragos',
+  'Mocktails (tragos sin alcohol)',
   'Birras',
   'Latas',
   'Vinos / espumantes',
@@ -31,9 +32,24 @@ const itemsBy = (category: string) =>
     .filter(item => item.data.category === category && item.data.active)
     .sort((a, b) => a.data.order - b.data.order);
 
+// Todas las categorías presentes, ordenadas por el orden de sus items.
+const allCategories = [...new Set(
+  [...allMenuItems]
+    .filter(i => i.data.active)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(i => i.data.category),
+)];
+
+// Categoría desconocida (nueva en Fudo) → cae en Bebidas para no perderla.
+const orderedFood = foodCategories.filter(c => allCategories.includes(c));
+const orderedDrinks = [
+  ...drinkCategories.filter(c => allCategories.includes(c)),
+  ...allCategories.filter(c => !foodCategories.includes(c) && !drinkCategories.includes(c)),
+];
+
 const groups = [
-  { id: 'comida', label: 'Comida', categories: foodCategories },
-  { id: 'bebidas', label: 'Bebidas', categories: drinkCategories },
+  { id: 'comida', label: 'Comida', categories: orderedFood },
+  { id: 'bebidas', label: 'Bebidas', categories: orderedDrinks },
 ].map(g => ({
   ...g,
   blocks: g.categories

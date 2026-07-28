@@ -2,7 +2,7 @@
   "category": "Platos Principales",
   "name": "Poke Bowl Salmón",
   "description": "Base de arroz, salmon , palta, queso crema, mango en cubos, salsa de maracuya, frutilla, verdeo, vegetales encurtidos y huevo baja temperatura.",
-  "order": 47,
+  "order": 78,
   "active": true,
-  "image": "/assets/images/menu/poke-bowl-salmon.jpg"
+  "image": "/assets/images/menu/poke-bowl-salmon.webp"
 }

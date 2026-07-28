@@ -19,7 +19,7 @@ collections:
     extension: "json"
     format: "json"
     fields:
-      - {label: "Categoría", name: "category", widget: "select", options: ["Entradas", "Ensaladas", "Platos Principales", "Pizzas", "Sandwichs", "Hamburguesas", "Postres", "Coctelería de autor", "Tragos", "Birras", "Latas", "Vinos / espumantes", "Vermouth", "Whiskey", "Bebidas sin alcohol"]}
+      - {label: "Categoría", name: "category", widget: "select", options: ["Entradas", "Ensaladas", "Platos Principales", "Pizzas", "Sandwichs", "Hamburguesas", "Postres", "Coctelería de autor", "Tragos", "Mocktails (tragos sin alcohol)", "Birras", "Latas", "Vinos / espumantes", "Vermouth", "Whiskey", "Bebidas sin alcohol"]}
       - {label: "Nombre", name: "name", widget: "string"}
       - {label: "Descripción", name: "description", widget: "text", required: false, default: ""}
       - {label: "Imagen", name: "image", widget: "image", required: false}

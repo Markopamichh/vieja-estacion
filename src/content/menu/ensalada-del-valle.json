@@ -2,7 +2,7 @@
   "category": "Ensaladas",
   "name": "Ensalada del Valle",
   "description": "Rucula, queso azul, peras y almendras.",
-  "order": 114,
+  "order": 103,
   "active": true,
-  "image": "/assets/images/menu/ensalada-del-valle.jpg"
+  "image": "/assets/images/menu/ensalada-del-valle.webp"
 }

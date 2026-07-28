@@ -1,7 +1,7 @@
 {
-  "category": "Bebidas sin alcohol",
+  "category": "Mocktails (tragos sin alcohol)",
   "name": "Limonada",
   "description": "Opcion con o sin almibar",
-  "order": 86,
+  "order": 41,
   "active": true
 }

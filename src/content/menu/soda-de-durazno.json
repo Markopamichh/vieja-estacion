@@ -1,7 +1,7 @@
 {
-  "category": "Bebidas sin alcohol",
+  "category": "Mocktails (tragos sin alcohol)",
   "name": "Soda de Durazno",
   "description": "Dulce, esta hecha a base de un cordial de durazno, soda y una rodaja de naranja.",
-  "order": 88,
+  "order": 80,
   "active": true
 }

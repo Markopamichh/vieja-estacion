@@ -8,6 +8,7 @@
     "dev:cms": "concurrently \"npm run dev\" \"npm run cms\"",
     "build": "astro build",
     "preview": "astro preview",
+    "sync:menu": "node scripts/sync-menu.mjs",
     "astro": "astro"
   },
   "dependencies": {
