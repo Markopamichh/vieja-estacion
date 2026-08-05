@@ -117,6 +117,28 @@ const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
     <div class="marquee__fade marquee__fade--left"></div>
     <div class="marquee__fade marquee__fade--right"></div>
   </div>
+
+  <!-- CTA: dejar reseña en Google -->
+  <div class="reviews-cta container">
+    <div class="reviews-cta__inner">
+      <div class="reviews-cta__glow" aria-hidden="true"></div>
+      <p class="reviews-cta__text">¿Ya viniste? Contanos cómo la pasaste.</p>
+      <a
+        href="https://www.google.com/maps/search/?api=1&query=Bar+cultural+Vieja+Estacion+Centenario+Neuquen"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="reviews-cta__btn"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M23.52 12.27c0-.82-.07-1.6-.2-2.36H12v4.47h6.47a5.53 5.53 0 0 1-2.4 3.63v3.02h3.88c2.27-2.09 3.57-5.17 3.57-8.76z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.96-1.08 7.95-2.9l-3.88-3.02c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.11A12 12 0 0 0 12 24z"/>
+          <path fill="#FBBC05" d="M5.27 14.28a7.2 7.2 0 0 1 0-4.56V6.61H1.29a12 12 0 0 0 0 10.78l3.98-3.11z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44A11.96 11.96 0 0 0 12 0 12 12 0 0 0 1.29 6.61l3.98 3.11C6.22 6.86 8.87 4.75 12 4.75z"/>
+        </svg>
+        Dejanos tu reseña en Google
+      </a>
+    </div>
+  </div>
 </section>
 
 <style>
@@ -172,14 +194,14 @@ const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
   /* Cards */
   .review-card {
     flex: 0 0 auto;
-    width: 340px;
+    width: 370px;
     background-color: var(--color-dark-mid);
     border: 1px solid var(--color-brown);
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 1.65rem;
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    gap: 1rem;
   }
 
   .review-card__head {
@@ -206,7 +228,7 @@ const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
 
   .review-card__name {
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     font-weight: 600;
     color: var(--color-text-primary);
     margin: 0;
@@ -223,15 +245,14 @@ const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
   .review-card__stars .off { color: var(--color-brown); }
 
   .review-card__text {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-style: italic;
-    font-weight: 300;
-    line-height: 1.6;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.7;
     color: var(--color-text-primary);
     margin: 0;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -256,12 +277,88 @@ const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
     background: linear-gradient(to left, var(--color-dark), transparent);
   }
 
+  /* CTA reseña en Google */
+  .reviews-cta {
+    margin-top: 4rem;
+  }
+
+  .reviews-cta__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Glow: blob radial detrás, sube y brilla al hover */
+  .reviews-cta__glow {
+    position: absolute;
+    left: 50%;
+    bottom: -60%;
+    width: 60%;
+    height: 300px;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      ellipse at center,
+      rgba(201, 169, 110, 0.4) 0%,
+      rgba(201, 169, 110, 0) 65%
+    );
+    opacity: 0.7;
+    z-index: -1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .reviews-cta__inner:hover .reviews-cta__glow {
+    transform: translateX(-50%) translateY(-2rem);
+    opacity: 1;
+  }
+
+  .reviews-cta__text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 300;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin: 0;
+  }
+
+  .reviews-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.95rem 1.75rem;
+    background: var(--color-text-primary);
+    color: var(--color-dark);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+  }
+
+  .reviews-cta__btn:hover {
+    transform: translateY(-2px);
+    background: #fff;
+    box-shadow: 0 8px 30px rgba(201, 169, 110, 0.25);
+  }
+
   @media (max-width: 480px) {
     .review-card {
       width: 280px;
       padding: 1.25rem;
     }
     .marquee__fade { width: 8%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reviews-cta__glow { transition: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
