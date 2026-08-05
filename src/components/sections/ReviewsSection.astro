@@ -1,51 +1,271 @@
 ---
-// Reviews section component
-import ReviewCard from '../ui/ReviewCard.astro';
+// Reseñas — marquee de testimonios reales (dos filas, sentidos opuestos)
+type Review = { stars: number; text: string; name: string };
 
-const reviews = [
+const reviews: Review[] = [
   {
     stars: 5,
-    text: 'Una experiencia única. La combinación de buena música y excelente comida hace de este lugar algo especial. Las costillas BBQ son imperdibles.',
-    name: 'María G.',
-    role: 'Cliente frecuente'
+    name: 'Mariana Sol Relloso',
+    text: 'Hermoso lugar! Festejé mi cumple hace poco y la atención ha sido espectacular, éramos un montón. Gracias por el buen servicio de siempre. Ahora que la carta está con nuevos platos habrá que ir nuevamente 😉',
   },
   {
     stars: 5,
-    text: 'El ambiente es increíble, especialmente los jueves de música acústica. El servicio es excelente y la comida deliciosa. Definitivamente volveré.',
-    name: 'Juan P.',
-    role: 'Músico local'
+    name: 'Oscar Charo Achares',
+    text: 'Muy lindo lugar, agradable, buen ambiente, excelente atención, se come rico y se escucha MUY BUENA MÚSICA EN VIVO!',
+  },
+  {
+    stars: 4,
+    name: 'M. Belén Toledo',
+    text: 'Buena comida, buena birra, buena música.',
   },
   {
     stars: 5,
-    text: 'La decoración del lugar te transporta a otra época. Me encanta la historia detrás del bar y cómo han mantenido la esencia de la antigua estación.',
-    name: 'Ana M.',
-    role: 'Historiadora'
+    name: 'Hurón Tatto',
+    text: 'La verdad que me encantó la atención, los chicos, tanto mozos, cocineros y hasta el dueño, unos genios. Llegamos tarde y nos cocinaron igual. Generé bastante contenido para mis redes. ¡Volveré pronto!',
+  },
+  {
+    stars: 4,
+    name: 'Juanchuky Cerda',
+    text: 'Lindo lugar, linda atención. Me gustó mucho que sumen artistas de todos los estilos para compartir su música en el bar. La ubicación es genial.',
   },
   {
     stars: 5,
-    text: 'Los eventos de música en vivo son espectaculares. El sonido es perfecto y la selección de bandas es excelente. ¡El mejor lugar para terminar la semana!',
-    name: 'Carlos R.',
-    role: 'Amante de la música'
+    name: 'Francisco Paz Valdez',
+    text: 'Platos abundantes y a precio normal. Ambiente acogedor para disfrutar un buen número musical.',
   },
   {
     stars: 5,
-    text: 'La tabla de quesos es extraordinaria, y el servicio siempre atento. El ambiente rústico-moderno crea el equilibrio perfecto para una noche especial.',
-    name: 'Laura B.',
-    role: 'Foodie'
-  }
+    name: 'Macarena Barreiro',
+    text: 'Hermoso lugar, tranquilo para comer algo y tomar algún trago escuchando a alguna banda.',
+  },
+  {
+    stars: 5,
+    name: 'Marko Pamich',
+    text: 'Excelente lugar, excelente ambiente y una atención increíble. Sin duda el mejor de Centenario.',
+  },
+  {
+    stars: 4,
+    name: 'Abril',
+    text: 'Muy buena experiencia, había música y la atención es muy buena, son muy amables. Muy rica la bebida de sandía.',
+  },
+  {
+    stars: 5,
+    name: 'Jeremías Mondini',
+    text: 'Es un lugar muy pintoresco, se come muy rico, buena cerveza artesanal, excelente atención, familiar, se escuchan bandas en vivo los sábados. ¡Muy recomendable!',
+  },
 ];
+
+const initials = (name: string) =>
+  name
+    .replace(/^[A-Z]\.\s*/, '')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase();
+
+const firstRow = reviews.slice(0, Math.ceil(reviews.length / 2));
+const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
 ---
 
-<section id="resenas" class="reviews-section">
-  <div class="section-header">
-    <h2>Reseñas</h2>
-    <p class="subtitle">Lo que dicen nuestros clientes</p>
+<section id="resenas" class="reviews section--dark">
+  <div class="container reviews__header reveal">
+    <p class="section-label">Lo que dicen</p>
+    <h2 class="section-title reviews__title">Reseñas</h2>
   </div>
-  <div class="reviews-carousel">
-    <div class="reviews-track" id="reviews-track">
-      {reviews.map(review => (
-        <ReviewCard {...review} />
-      ))}
+
+  <div class="marquee">
+    <div class="marquee__row">
+      <div class="marquee__track">
+        {[...firstRow, ...firstRow].map((r, i) => (
+          <article class="review-card" aria-hidden={i >= firstRow.length ? 'true' : undefined}>
+            <div class="review-card__head">
+              <span class="review-card__avatar">{initials(r.name)}</span>
+              <div>
+                <p class="review-card__name">{r.name}</p>
+                <p class="review-card__stars" aria-label={`${r.stars} de 5 estrellas`}>
+                  <span class="on">{'★'.repeat(r.stars)}</span><span class="off">{'★'.repeat(5 - r.stars)}</span>
+                </p>
+              </div>
+            </div>
+            <p class="review-card__text">{r.text}</p>
+          </article>
+        ))}
+      </div>
     </div>
+
+    <div class="marquee__row">
+      <div class="marquee__track marquee__track--reverse">
+        {[...secondRow, ...secondRow].map((r, i) => (
+          <article class="review-card" aria-hidden={i >= secondRow.length ? 'true' : undefined}>
+            <div class="review-card__head">
+              <span class="review-card__avatar">{initials(r.name)}</span>
+              <div>
+                <p class="review-card__name">{r.name}</p>
+                <p class="review-card__stars" aria-label={`${r.stars} de 5 estrellas`}>
+                  <span class="on">{'★'.repeat(r.stars)}</span><span class="off">{'★'.repeat(5 - r.stars)}</span>
+                </p>
+              </div>
+            </div>
+            <p class="review-card__text">{r.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="marquee__fade marquee__fade--left"></div>
+    <div class="marquee__fade marquee__fade--right"></div>
   </div>
 </section>
+
+<style>
+  .reviews {
+    padding-block: var(--section-pad);
+    overflow: hidden;
+  }
+
+  .reviews__header {
+    margin-bottom: 3.5rem;
+  }
+
+  .reviews__title {
+    color: var(--color-text-primary);
+    margin-top: 0.5rem;
+  }
+
+  /* Marquee */
+  .marquee {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .marquee__row {
+    display: flex;
+    overflow: hidden;
+  }
+
+  .marquee__track {
+    display: flex;
+    gap: 1.25rem;
+    width: max-content;
+    padding-inline: 0.625rem;
+    animation: marquee-scroll 48s linear infinite;
+  }
+
+  .marquee__track--reverse {
+    animation-direction: reverse;
+  }
+
+  /* Pausa al pasar el mouse por cualquier parte del marquee */
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-50% - 0.625rem)); }
+  }
+
+  /* Cards */
+  .review-card {
+    flex: 0 0 auto;
+    width: 340px;
+    background-color: var(--color-dark-mid);
+    border: 1px solid var(--color-brown);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .review-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .review-card__avatar {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-gold), var(--color-gold-muted));
+    color: var(--color-dark);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .review-card__name {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .review-card__stars {
+    margin: 0.15rem 0 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+
+  .review-card__stars .on { color: var(--color-gold); }
+  .review-card__stars .off { color: var(--color-brown); }
+
+  .review-card__text {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Bordes desvanecidos */
+  .marquee__fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 12%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .marquee__fade--left {
+    left: 0;
+    background: linear-gradient(to right, var(--color-dark), transparent);
+  }
+
+  .marquee__fade--right {
+    right: 0;
+    background: linear-gradient(to left, var(--color-dark), transparent);
+  }
+
+  @media (max-width: 480px) {
+    .review-card {
+      width: 280px;
+      padding: 1.25rem;
+    }
+    .marquee__fade { width: 8%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+    .marquee__row { overflow-x: auto; }
+  }
+</style>
