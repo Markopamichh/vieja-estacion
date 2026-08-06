@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://viejaestacion.com/sitemap-index.xml
+Sitemap: https://barcultural.com.ar/sitemap-index.xml

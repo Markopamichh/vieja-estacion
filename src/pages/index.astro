@@ -11,8 +11,10 @@ import LocationSection from '../components/sections/LocationSection.astro';
 import ReviewsSection from '../components/sections/ReviewsSection.astro';
 import { restaurantSchema } from '../utils/schemas';
 
-const pageTitle = 'Inicio';
-const pageDescription = 'Bar cultural con música en vivo en el corazón de Centenario, Neuquén. Buena comida, cervezas artesanales y eventos musicales todas las semanas. Mié, Jue y Dom de 19:00 a 01:00 · Vie y Sáb de 19:00 a 04:00.';
+export const prerender = true;
+
+const pageTitle = 'La Vieja Estación — Bar Cultural y Música en Vivo en Centenario';
+const pageDescription = 'La Vieja Estación: bar cultural con música en vivo en Centenario, Neuquén. Buena comida, cervezas artesanales y shows todas las semanas. Mié a Dom desde las 19 hs.';
 ---
 
 <BaseLayout

@@ -2,11 +2,11 @@
 
 export const restaurantSchema = {
   "@context": "https://schema.org",
-  "@type": "Restaurant",
-  "name": "Vieja Estación",
-  "description": "Bar cultural con música en vivo, comida artesanal y eventos semanales",
-  "image": "https://viejaestacion.com/assets/images/hero/heroimg.webp",
-  "url": "https://viejaestacion.com",
+  "@type": ["Restaurant", "BarOrPub"],
+  "name": "La Vieja Estación",
+  "description": "Bar cultural con música en vivo, comida artesanal y eventos semanales en Centenario, Neuquén.",
+  "image": "https://barcultural.com.ar/assets/images/hero/heroimg.webp",
+  "url": "https://barcultural.com.ar",
   "telephone": "+542994051816",
   "address": {
     "@type": "PostalAddress",
@@ -15,6 +15,18 @@ export const restaurantSchema = {
     "addressRegion": "Neuquén",
     "postalCode": "Q8309",
     "addressCountry": "AR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -38.826389,
+    "longitude": -68.130556
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.7",
+    "reviewCount": "10",
+    "bestRating": "5",
+    "worstRating": "1"
   },
   "openingHoursSpecification": [
     {
@@ -30,8 +42,9 @@ export const restaurantSchema = {
       "closes": "04:00"
     }
   ],
-  "servesCuisine": "Cocina casera, Picadas, Hamburguesas",
+  "servesCuisine": "Cocina casera, Picadas, Hamburguesas, Pizzas",
   "priceRange": "$$",
+  "acceptsReservations": "True",
   "menu": "https://menu.fu.do/viejaestacion/qr-menu",
   "sameAs": [
     "https://www.facebook.com/barculturalVIEJAESTACION",
@@ -87,7 +100,7 @@ export const createEventSchema = (event: EventData) => ({
   "organizer": {
     "@type": "Organization",
     "name": "Vieja Estación",
-    "url": "https://viejaestacion.com"
+    "url": "https://barcultural.com.ar"
   }
 });
 
@@ -115,7 +128,7 @@ export const createArticleSchema = (post: BlogPostData) => ({
     "name": "Vieja Estación",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://viejaestacion.com/assets/images/logo/imglogo.jpg"
+      "url": "https://barcultural.com.ar/assets/images/logo/imglogo.jpg"
     }
   }
 });

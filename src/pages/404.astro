@@ -1,0 +1,177 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = 'Página no encontrada';
+const pageDescription = 'La página que buscás no existe o fue movida. Volvé al inicio de La Vieja Estación.';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <main class="notfound">
+    <div class="notfound__glow" aria-hidden="true"></div>
+    <div class="notfound__inner">
+      <img
+        src="/assets/images/logoimg.png"
+        alt="La Vieja Estación"
+        class="notfound__logo"
+        width="88"
+        height="88"
+      />
+      <p class="notfound__code">404</p>
+      <h1 class="notfound__title">Este andén está vacío</h1>
+      <p class="notfound__text">
+        La página que buscás no existe o cambió de lugar. Pero la música sigue
+        sonando — volvé al inicio y sumate.
+      </p>
+
+      <div class="notfound__actions">
+        <a href="/" class="notfound__btn notfound__btn--primary">Volver al inicio</a>
+        <a href="/#menu" class="notfound__btn notfound__btn--ghost">Ver el menú</a>
+      </div>
+
+      <div class="notfound__links">
+        <a href="/#eventos">Eventos</a>
+        <span aria-hidden="true">·</span>
+        <a href="/#historia">Historia</a>
+        <span aria-hidden="true">·</span>
+        <a href="/#ubicacion">Cómo llegar</a>
+        <span aria-hidden="true">·</span>
+        <a href="/#reservas">Reservas</a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .notfound {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-dark);
+    padding: 2rem 1.5rem;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .notfound__glow {
+    position: absolute;
+    left: 50%;
+    top: 12%;
+    width: 70%;
+    height: 360px;
+    transform: translateX(-50%);
+    background: radial-gradient(
+      ellipse at center,
+      rgba(201, 169, 110, 0.18) 0%,
+      rgba(201, 169, 110, 0) 65%
+    );
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .notfound__inner {
+    max-width: 520px;
+    text-align: center;
+  }
+
+  .notfound__logo {
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+    box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.15);
+    margin-bottom: 2rem;
+  }
+
+  .notfound__code {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 14vw, 7rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--color-gold);
+    margin: 0;
+  }
+
+  .notfound__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .notfound__text {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    max-width: 42ch;
+    margin: 0 auto 2.25rem;
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .notfound__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.9rem 1.9rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: transform var(--transition-base), background var(--transition-base), color var(--transition-base);
+  }
+
+  .notfound__btn--primary {
+    background: var(--color-gold);
+    color: var(--color-dark);
+  }
+
+  .notfound__btn--primary:hover {
+    background: var(--color-gold-muted);
+    transform: translateY(-2px);
+  }
+
+  .notfound__btn--ghost {
+    border: 1px solid var(--color-brown);
+    color: var(--color-text-primary);
+  }
+
+  .notfound__btn--ghost:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  .notfound__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .notfound__links a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .notfound__links a:hover {
+    color: var(--color-gold);
+  }
+</style>
