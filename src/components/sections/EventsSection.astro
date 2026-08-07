@@ -1,6 +1,5 @@
 ---
-// Eventos — live Instagram feed via Behold JSON, fallback to static images
-const BEHOLD_FEED_URL = import.meta.env.PUBLIC_BEHOLD_FEED_URL || 'https://feeds.behold.so/FEED_ID';
+// Eventos — CTA a Instagram con la agenda vigente
 const INSTAGRAM_URL = 'https://www.instagram.com/laviejabarcultural/';
 ---
 
@@ -11,121 +10,44 @@ const INSTAGRAM_URL = 'https://www.instagram.com/laviejabarcultural/';
       <h2 class="section-title events__title">Eventos</h2>
     </div>
 
-    <div
-      class="events__grid reveal"
-      id="ig-feed-grid"
-      data-feed-url={BEHOLD_FEED_URL}
-      data-instagram-url={INSTAGRAM_URL}
+    <a
+      href={INSTAGRAM_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="events__card reveal"
+      aria-label="Seguir a La Vieja Estación en Instagram y ver la agenda"
     >
-      <!-- Fallback: static posts (replaced by JS if the feed loads) -->
-      <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="ig-post">
-        <img src="/assets/images/events/musicaenvivo2.jpeg" alt="Música en vivo en La Vieja Estación" loading="lazy" />
-        <div class="ig-post__overlay">
-          <p class="ig-post__caption">Viernes de rock en vivo — el escenario nos espera</p>
-        </div>
-      </a>
-      <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="ig-post">
-        <img src="/assets/images/events/musicaenvivo4.jpeg" alt="Jazz en vivo en La Vieja Estación" loading="lazy" />
-        <div class="ig-post__overlay">
-          <p class="ig-post__caption">Jazz Quartet — miércoles íntimo con el mejor sonido</p>
-        </div>
-      </a>
-      <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="ig-post">
-        <img src="/assets/images/events/musicaenvivo6.jpeg" alt="Sunset Sessions en La Vieja Estación" loading="lazy" />
-        <div class="ig-post__overlay">
-          <p class="ig-post__caption">Domingo Sunset Sessions — música al caer el sol</p>
-        </div>
-      </a>
-    </div>
+      <div class="events__card-media">
+        <img
+          src="/assets/images/events/711814479_18445589335136104_5057417060588872750_n.jpg"
+          alt="Música en vivo en La Vieja Estación"
+          loading="lazy"
+        />
+        <div class="events__card-shade"></div>
+      </div>
 
-    <div class="events__cta reveal">
-      <a
-        href={INSTAGRAM_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="events__cta-link"
-      >Ver toda la agenda en @laviejabarcultural →</a>
-    </div>
+      <div class="events__card-content">
+        <span class="events__card-tag">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          @laviejabarcultural
+        </span>
+
+        <h3 class="events__card-title">La agenda se vive en Instagram</h3>
+
+        <p class="events__card-text">
+          Cada semana anunciamos shows, noches temáticas y sorpresas primero ahí.
+          Seguinos para enterarte de los próximos eventos y no perderte ninguno.
+        </p>
+
+        <span class="events__card-btn">Ver próximos eventos en Instagram →</span>
+      </div>
+    </a>
   </div>
 </section>
-
-<script>
-  type BeholdPost = {
-    id: string;
-    permalink: string;
-    caption?: string;
-    mediaType: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM';
-    mediaUrl: string;
-    thumbnailUrl?: string;
-    timestamp: string;
-  };
-
-  async function loadInstagramFeed() {
-    const grid = document.getElementById('ig-feed-grid');
-    if (!grid) return;
-
-    const feedUrl = grid.dataset.feedUrl;
-    // Feed not configured yet — keep static fallback
-    if (!feedUrl || feedUrl.includes('FEED_ID')) return;
-
-    try {
-      const res = await fetch(feedUrl);
-      if (!res.ok) throw new Error(`Feed HTTP ${res.status}`);
-      const data = await res.json();
-      const posts: BeholdPost[] = (data.posts ?? data).slice(0, 6);
-      if (!posts.length) return;
-
-      const dateFmt = new Intl.DateTimeFormat('es-AR', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
-
-      grid.innerHTML = '';
-      for (const post of posts) {
-        const imgSrc = post.mediaType === 'VIDEO' ? (post.thumbnailUrl ?? post.mediaUrl) : post.mediaUrl;
-        const firstLine = (post.caption ?? '').split('\n')[0];
-        const caption = firstLine.length > 90 ? firstLine.slice(0, 90).trimEnd() + '…' : firstLine;
-        const date = dateFmt.format(new Date(post.timestamp));
-
-        const link = document.createElement('a');
-        link.href = post.permalink;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.className = 'ig-post';
-
-        const img = document.createElement('img');
-        img.src = imgSrc;
-        img.alt = caption || 'Post de Instagram de La Vieja Estación';
-        img.loading = 'lazy';
-
-        const overlay = document.createElement('div');
-        overlay.className = 'ig-post__overlay';
-
-        const dateEl = document.createElement('p');
-        dateEl.className = 'ig-post__date';
-        dateEl.textContent = date;
-        overlay.appendChild(dateEl);
-
-        if (caption) {
-          const captionEl = document.createElement('p');
-          captionEl.className = 'ig-post__caption';
-          captionEl.textContent = caption;
-          overlay.appendChild(captionEl);
-        }
-
-        link.appendChild(img);
-        link.appendChild(overlay);
-        grid.appendChild(link);
-      }
-    } catch (err) {
-      // Keep static fallback on any failure
-      console.warn('No se pudo cargar el feed de Instagram:', err);
-    }
-  }
-
-  loadInstagramFeed();
-</script>
 
 <style>
   .events {
@@ -141,104 +63,104 @@ const INSTAGRAM_URL = 'https://www.instagram.com/laviejabarcultural/';
     margin-top: 0.5rem;
   }
 
-  .events__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-  }
-
-  .events__grid :global(.ig-post) {
+  .events__card {
     position: relative;
     display: block;
-    aspect-ratio: 1/1;
     overflow: hidden;
     border: 1px solid var(--color-brown);
+    background-color: var(--color-dark-mid);
+    transition: border-color var(--transition-base), transform var(--transition-base);
   }
 
-  .events__grid :global(.ig-post img) {
+  .events__card:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-4px);
+  }
+
+  .events__card-media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .events__card-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease, filter 0.4s ease;
+    filter: brightness(0.5);
+    transition: transform 0.6s ease, filter 0.5s ease;
   }
 
-  .events__grid :global(.ig-post__overlay) {
+  .events__card-shade {
     position: absolute;
     inset: 0;
-    background-color: rgba(26, 20, 16, 0.88);
+    background: linear-gradient(
+      to top,
+      rgba(26, 20, 16, 0.96) 0%,
+      rgba(26, 20, 16, 0.82) 45%,
+      rgba(26, 20, 16, 0.45) 100%
+    );
+  }
+
+  .events__card:hover .events__card-media img {
+    transform: scale(1.05);
+    filter: brightness(0.55);
+  }
+
+  .events__card-content {
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 1.25rem;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.35s ease;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: clamp(2.5rem, 6vw, 4.5rem);
+    max-width: 680px;
   }
 
-  .events__grid :global(.ig-post__date) {
+  .events__card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: var(--font-body);
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-gold);
+    border: 1px solid rgba(201, 169, 110, 0.4);
+    background: rgba(26, 20, 16, 0.35);
+    padding: 0.5rem 0.9rem;
   }
 
-  .events__grid :global(.ig-post__caption) {
+  .events__card-title {
     font-family: var(--font-display);
+    font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.15;
+    color: var(--color-text-primary);
+  }
+
+  .events__card-text {
+    font-family: var(--font-body);
     font-size: 0.95rem;
-    font-style: italic;
-    font-weight: 300;
-    color: var(--color-text-primary);
-    line-height: 1.5;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    max-width: 560px;
   }
 
-  .events__grid :global(.ig-post:hover img) {
-    transform: scale(1.06);
-    filter: brightness(0.6);
-  }
-
-  .events__grid :global(.ig-post:hover .ig-post__overlay) {
-    opacity: 1;
-  }
-
-  /* Touch devices: overlay always visible as gradient at bottom */
-  @media (hover: none) {
-    .events__grid :global(.ig-post__overlay) {
-      opacity: 1;
-      background: linear-gradient(to top, rgba(26, 20, 16, 0.92) 0%, rgba(26, 20, 16, 0.4) 50%, transparent 100%);
-      justify-content: flex-end;
-      align-items: flex-start;
-      text-align: left;
-      padding: 1rem;
-    }
-  }
-
-  /* CTA */
-  .events__cta {
-    margin-top: 2.5rem;
-    text-align: center;
-  }
-
-  .events__cta-link {
+  .events__card-btn {
+    display: inline-block;
     font-family: var(--font-display);
     font-style: italic;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--color-gold);
-    text-decoration: none;
-    transition: color var(--transition-base);
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--color-gold);
+    transition: color var(--transition-base), border-color var(--transition-base);
   }
 
-  .events__cta-link:hover {
+  .events__card:hover .events__card-btn {
     color: var(--color-text-primary);
-  }
-
-  @media (max-width: 768px) {
-    .events__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 4px;
-    }
+    border-color: var(--color-text-primary);
   }
 </style>
