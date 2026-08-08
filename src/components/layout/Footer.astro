@@ -76,7 +76,7 @@ const currentYear = new Date().getFullYear();
 
   <!-- Bottom bar -->
   <div class="footer__bottom container">
-    <p>&copy; {currentYear} La Vieja Estación. Todos los derechos reservados.</p>
+    <p>&copy; {currentYear} La Vieja Estación. Todos los derechos reservados. <a href="/privacidad" class="footer__legal-link">Política de Privacidad</a></p>
     <p class="footer__credit">Designed & developed by <a href="https://portfoliomarko.vercel.app/" target="_blank" rel="noopener noreferrer">Marko Pamich</a></p>
   </div>
 </footer>
@@ -235,6 +235,16 @@ const currentYear = new Date().getFullYear();
     font-size: 0.72rem;
     color: var(--color-text-muted);
     letter-spacing: 0.05em;
+  }
+
+  .footer__legal-link {
+    color: var(--color-gold-muted);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .footer__legal-link:hover {
+    color: var(--color-gold);
   }
 
   .footer__credit a {

@@ -1,0 +1,194 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+const pageTitle = 'Política de Privacidad';
+const pageDescription = 'Política de privacidad de La Vieja Estación — cómo tratamos los datos en barcultural.com.ar.';
+const updated = '2026-02-08';
+const updatedLabel = new Intl.DateTimeFormat('es-AR', {
+  day: 'numeric', month: 'long', year: 'numeric',
+}).format(new Date(updated));
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main class="legal">
+    <div class="container legal__inner">
+      <p class="section-label">Legal</p>
+      <h1 class="section-title legal__title">Política de Privacidad</h1>
+      <p class="legal__updated">Última actualización: {updatedLabel}</p>
+
+      <section class="legal__block">
+        <h2>Quiénes somos</h2>
+        <p>
+          Este sitio (<a href="https://barcultural.com.ar">barcultural.com.ar</a>)
+          es la web institucional de <strong>La Vieja Estación</strong>, bar cultural
+          ubicado en Av. Gral. Belgrano 195, Centenario, Neuquén, Argentina. Podés
+          contactarnos por WhatsApp al <strong>+54 299 405-1816</strong> o por
+          Instagram en <a href="https://www.instagram.com/laviejabarcultural/" target="_blank" rel="noopener noreferrer">@laviejabarcultural</a>.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Qué datos recopilamos</h2>
+        <p>
+          Este sitio es principalmente informativo y <strong>no cuenta con
+          formularios ni sistemas de registro que almacenen tus datos personales</strong>.
+          No creamos cuentas de usuario ni guardamos información que ingreses.
+        </p>
+        <p>
+          Cuando hacés clic en el botón de reservas, se abre una conversación en
+          <strong>WhatsApp</strong>. En ese caso, tu comunicación se rige por la
+          política de privacidad de WhatsApp y por el trato directo con nosotros.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Servicios de terceros</h2>
+        <p>
+          Para funcionar, el sitio carga recursos de terceros que, por su propia
+          naturaleza, pueden procesar datos técnicos como tu dirección IP o
+          instalar cookies:
+        </p>
+        <ul>
+          <li><strong>Google Maps</strong> — para mostrar el mapa de ubicación.</li>
+          <li><strong>Google Fonts</strong> — para las tipografías del sitio.</li>
+          <li><strong>Enlaces a redes sociales</strong> (Instagram, Facebook) y a
+            <strong>WhatsApp</strong>, que se abren en sus respectivas plataformas.</li>
+        </ul>
+        <p>
+          Estos servicios tienen sus propias políticas de privacidad, sobre las que
+          no tenemos control. Te recomendamos revisarlas si querés más detalle.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Cookies</h2>
+        <p>
+          No utilizamos cookies propias de seguimiento ni herramientas de analítica
+          para perfilar a los visitantes. Las únicas cookies que podrían generarse
+          provienen de los servicios de terceros mencionados (por ejemplo, Google
+          Maps). Podés bloquear o eliminar las cookies desde la configuración de tu
+          navegador en cualquier momento.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Tus derechos</h2>
+        <p>
+          De acuerdo con la <strong>Ley 25.326 de Protección de los Datos
+          Personales</strong> de Argentina, tenés derecho a acceder, rectificar,
+          actualizar y suprimir tus datos personales, en caso de que en algún
+          momento nos los hayas facilitado. Para ejercer estos derechos, escribinos
+          por WhatsApp o Instagram.
+        </p>
+        <p>
+          La Agencia de Acceso a la Información Pública, órgano de control de la Ley
+          25.326, tiene la atribución de atender denuncias y reclamos relacionados
+          con el tratamiento de datos personales.
+        </p>
+      </section>
+
+      <section class="legal__block">
+        <h2>Cambios en esta política</h2>
+        <p>
+          Podemos actualizar esta política si incorporamos nuevas funciones al sitio
+          (por ejemplo, formularios de reserva o herramientas de analítica).
+          Cualquier cambio se reflejará en esta misma página con su fecha de
+          actualización.
+        </p>
+      </section>
+
+      <a href="/" class="legal__back">← Volver al inicio</a>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal {
+    background-color: var(--color-dark);
+    padding-block: clamp(6rem, 12vw, 9rem) var(--section-pad);
+  }
+
+  .legal__inner {
+    max-width: 760px;
+  }
+
+  .legal__title {
+    color: var(--color-text-primary);
+    margin-top: 0.5rem;
+  }
+
+  .legal__updated {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .legal__block {
+    margin-bottom: 2.5rem;
+  }
+
+  .legal__block h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    margin-bottom: 0.9rem;
+  }
+
+  .legal__block p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .legal__block ul {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .legal__block li {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+  }
+
+  .legal__block strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .legal__block a,
+  .legal__back {
+    color: var(--color-gold);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .legal__block a:hover,
+  .legal__back:hover {
+    color: var(--color-text-primary);
+  }
+
+  .legal__back {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+</style>
