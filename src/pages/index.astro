@@ -13,7 +13,7 @@ import { restaurantSchema } from '../utils/schemas';
 
 export const prerender = true;
 
-const pageTitle = 'La Vieja Estación — Bar Cultural y Música en Vivo en Centenario';
+const pageTitle = 'La Vieja Estación — Bar y Música en Vivo, Centenario';
 const pageDescription = 'La Vieja Estación: bar cultural con música en vivo en Centenario, Neuquén. Buena comida, cervezas artesanales y shows todas las semanas. Mié a Dom desde las 19 hs.';
 ---
 
@@ -21,6 +21,7 @@ const pageDescription = 'La Vieja Estación: bar cultural con música en vivo en
   title={pageTitle}
   description={pageDescription}
   schema={restaurantSchema}
+  preloadImage="/assets/images/hero/heroimg.webp"
 >
   <Header />
 

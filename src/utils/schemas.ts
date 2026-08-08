@@ -1,5 +1,11 @@
 // Schema.org Structured Data for SEO
 
+const SITE = 'https://barcultural.com.ar';
+
+/** Convierte una ruta relativa en URL absoluta (requisito de Google para rich results). */
+const absoluteUrl = (path: string) =>
+  path.startsWith('http') ? path : `${SITE}${path.startsWith('/') ? '' : '/'}${path}`;
+
 export const restaurantSchema = {
   "@context": "https://schema.org",
   "@type": ["Restaurant", "BarOrPub"],
@@ -117,7 +123,7 @@ export const createArticleSchema = (post: BlogPostData) => ({
   "@type": "BlogPosting",
   "headline": post.title,
   "description": post.description,
-  "image": post.heroImage,
+  "image": absoluteUrl(post.heroImage),
   "datePublished": post.pubDate.toISOString(),
   "author": {
     "@type": "Organization",
